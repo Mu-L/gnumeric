@@ -5844,7 +5844,7 @@ msgstr "Sæt standard/standardkolonnebredde"
 #, c-format
 msgid ""
 "Set column width of selection on <span style='italic' weight='bold'>%s</span>"
-msgstr ""
+msgstr "Set kolonnebredde på <span style='italic' weight='bold'>%s</span>"
 
 #: ../src/dialogs/dialog-consolidate.c:188
 #, c-format
@@ -6896,7 +6896,7 @@ msgstr "Sæt standard/standardrækkehøjde"
 #, c-format
 msgid ""
 "Set row height of selection on <span style='italic' weight='bold'>%s</span>"
-msgstr ""
+msgstr "Set rækkehøjde på <span style='italic' weight='bold'>%s</span>"
 
 #: ../src/dialogs/dialog-scenarios.c:192 ../src/dialogs/dialog-scenarios.c:228
 msgid "Scenario Summary"
@@ -14205,7 +14205,7 @@ msgstr "Kaplan-Meier (%s)"
 #: ../src/tools/analysis-kaplan-meier.c:677
 #: ../src/tools/analysis-kaplan-meier.c:680
 msgid "Kaplan-Meier Estimates"
-msgstr ""
+msgstr "Kaplan-Meier Estimater"
 
 #: ../src/tools/analysis-normality.c:62
 msgid ""
@@ -16406,7 +16406,7 @@ msgstr "_Stikprøveudtagning..."
 
 #: ../src/wbc-gtk-actions.c:2938
 msgid "Periodic and random samples"
-msgstr ""
+msgstr "Periodiske og tilfældige stikprøver"
 
 #: ../src/wbc-gtk-actions.c:2945
 msgid "_Correlation..."
@@ -16458,7 +16458,7 @@ msgstr "_Fourier-analyse..."
 
 #: ../src/wbc-gtk-actions.c:2987
 msgid "Principal Components Analysis..."
-msgstr ""
+msgstr "Hovedkomponentanalyse..."
 
 #: ../src/wbc-gtk-actions.c:2994
 msgid "_Exponential Smoothing..."
@@ -16486,7 +16486,7 @@ msgstr "Regressionsanalyse"
 
 #: ../src/wbc-gtk-actions.c:3009
 msgid "_Kaplan-Meier Estimates..."
-msgstr ""
+msgstr "_Kaplan-Meier estimater..."
 
 #: ../src/wbc-gtk-actions.c:3010
 msgid "Creation of Kaplan-Meier Survival Curves"
@@ -16588,7 +16588,7 @@ msgstr "_Enkeltfaktor..."
 
 #: ../src/wbc-gtk-actions.c:3098
 msgid "One Factor Analysis of Variance..."
-msgstr ""
+msgstr "Enkelfaktoranalyse af varians..."
 
 #: ../src/wbc-gtk-actions.c:3102
 msgid "_Two Factor..."
@@ -16596,7 +16596,7 @@ msgstr "_Tofaktor..."
 
 #: ../src/wbc-gtk-actions.c:3103
 msgid "Two Factor Analysis of Variance..."
-msgstr ""
+msgstr "Tofaktoranalyse af varians..."
 
 #: ../src/wbc-gtk-actions.c:3110
 msgid "Test of _Homogeneity..."
@@ -16608,7 +16608,7 @@ msgstr ""
 
 #: ../src/wbc-gtk-actions.c:3115
 msgid "Test of _Independence..."
-msgstr ""
+msgstr "Test af uafhængighed..."
 
 #: ../src/wbc-gtk-actions.c:3116
 msgid "Chi Squared Test of Independence..."

@@ -227,7 +227,7 @@ item_grid_realize (GocItem *item)
 	ig->cursor_link  = gdk_cursor_new_for_display (display, GDK_HAND2);
 	cursor_cross =
 		gtk_icon_theme_load_surface (gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget)),
-					     "cursor-cross", 32,
+					     "gnumeric-cursor-cross", 32,
 					     gtk_widget_get_scale_factor (widget),
 					     gtk_widget_get_window (widget),
 					     0, NULL);

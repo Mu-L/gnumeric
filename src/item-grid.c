@@ -1183,10 +1183,7 @@ item_grid_button_released (GocItem *item, int button, G_GNUC_UNUSED double x_, G
 		return TRUE;
 
 	case GNM_ITEM_GRID_SELECTING_FORMULA_RANGE:
-/*  Removal of this code (2 lines)                                                */
-/*  should fix http://bugzilla.gnome.org/show_bug.cgi?id=63485                    */
-/*			sheet_make_cell_visible (sheet,                           */
-/*				sheet->edit_pos.col, sheet->edit_pos.row, FALSE); */
+		// This used to do its own thing, see bugzilla 63485.
 		/* Fall through */
 	case GNM_ITEM_GRID_SELECTING_CELL_RANGE:
 		sv_selection_simplify (scg_view (scg));

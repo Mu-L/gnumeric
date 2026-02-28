@@ -175,7 +175,7 @@ gnumeric_reqs="$libspreadsheet_reqs
 	pangocairo		>= 1.46.0
 "
 libspreadsheet_gtk_reqs="
-	gtk+-3.0		>= 3.8.7
+	gtk+-3.0		>= 3.20.0
 "
 
 gnumeric_gtk_reqs="$libspreadsheet_gtk_reqs"

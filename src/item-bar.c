@@ -162,17 +162,10 @@ ib_reload_sizing_style (GnmItemBar *ib)
 		GtkStyleContext *context;
 
 		g_clear_object (&ib->styles[ui]);
-#if GTK_CHECK_VERSION(3,20,0)
 		context = go_style_context_from_selector (NULL, selection_styles[ui]);
-#else
-		context = g_object_ref (goc_item_get_style_context (item));
-#endif
 
 		ib->styles[ui] = context;
 		gtk_style_context_save (context);
-#if !GTK_CHECK_VERSION(3,20,0)
-		gtk_style_context_set_state (context, state);
-#endif
 		gtk_style_context_get (context, state, "font", &desc, NULL);
 		pango_font_description_set_size (desc,
 						 zoom_factor * pango_font_description_get_size (desc));
@@ -349,9 +342,6 @@ ib_draw_cell (GnmItemBar const * const ib, cairo_t *cr,
 	cairo_save (cr);
 
 	gtk_style_context_save (ctxt);
-#if !GTK_CHECK_VERSION(3,20,0)
-	gtk_style_context_set_state (ctxt, selection_type_flags[type]);
-#endif
 	gtk_render_background (ctxt, cr, rect->x, rect->y,
 			       rect->width + 1, rect->height + 1);
 
@@ -1214,13 +1204,6 @@ gnm_item_bar_init (GnmItemBar *ib)
 	ib->has_resize_guides = FALSE;
 	ib->pango.item = NULL;
 	ib->pango.glyphs = pango_glyph_string_new ();
-
-#if !GTK_CHECK_VERSION(3,20,0)
-	/* Style-wise we are a button.  */
-	gtk_style_context_add_class
-		(goc_item_get_style_context (GOC_ITEM (ib)),
-		 GTK_STYLE_CLASS_BUTTON);
-#endif
 }
 
 static void

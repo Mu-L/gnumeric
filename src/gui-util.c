@@ -1471,13 +1471,8 @@ gnm_style_context_get_color (GtkStyleContext *context,
 void
 gnm_get_link_color (GtkWidget *widget, GdkRGBA *res)
 {
-#if GTK_CHECK_VERSION(3,12,0)
 	GtkStyleContext *ctxt = gtk_widget_get_style_context (widget);
 	gnm_style_context_get_color (ctxt, GTK_STATE_FLAG_LINK, res);
-#else
-	(void)widget;
-	gdk_rgba_parse (res, "blue");
-#endif
 	gnm_css_debug_color ("link.color", res);
 }
 

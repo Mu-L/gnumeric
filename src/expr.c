@@ -3240,7 +3240,7 @@ gnm_expr_top_equal (GnmExprTop const *te1, GnmExprTop const *te2)
 	return gnm_expr_equal (te1->expr, te2->expr);
 }
 
-/*
+/**
  * gnm_expr_top_relocate:
  * @texpr: #GnmExprTop to fixup
  * @rinfo: #GnmExprRelocateInfo details of relocation
@@ -3259,6 +3259,7 @@ gnm_expr_top_equal (GnmExprTop const *te1, GnmExprTop const *te2)
  * GNM_EXPR_RELOCATE_COLS
  * GNM_EXPR_RELOCATE_ROWS
  *
+ * Returns: (transfer full) (nullable): new expression.
  */
 GnmExprTop const *
 gnm_expr_top_relocate (GnmExprTop const *texpr,
@@ -3279,8 +3280,15 @@ gnm_expr_top_relocate (GnmExprTop const *texpr,
 	return gnm_expr_top_new (gnm_expr_relocate (texpr->expr, &rinfo_tmp));
 }
 
-/*
+/**
+ * gnm_expr_top_relocate_sheet:
+ * @texpr: expression
+ * @src: old sheet
+ * @dst: new sheet
+ *
  * Convenience function to change an expression from one sheet to another.
+ *
+ * Returns: (transfer full) (nullable): new expression.
  */
 GnmExprTop const *
 gnm_expr_top_relocate_sheet (GnmExprTop const *texpr,

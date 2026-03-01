@@ -2778,6 +2778,8 @@ cb_set_cell_content (GnmCellIter const *iter, closure_set_cell_value *info)
 		gnm_cell_cleanout (cell);
 
 	if (texpr != NULL) {
+		GnmExprTop const *relo = NULL;
+
 		if (!range_contains (&info->expr_bound,
 				     iter->pp.eval.col, iter->pp.eval.row)) {
 			GnmExprRelocateInfo rinfo;
@@ -2790,12 +2792,17 @@ cb_set_cell_content (GnmCellIter const *iter, closure_set_cell_value *info)
 			rinfo.target_sheet = iter->pp.sheet;
 			rinfo.col_offset = 0;
 			rinfo.row_offset = 0;
-			texpr = gnm_expr_top_relocate (texpr, &rinfo, FALSE);
+
+			relo = gnm_expr_top_relocate (texpr, &rinfo, FALSE);
+			if (relo)
+				texpr = relo;
 		}
 
 		gnm_cell_set_expr (cell, texpr);
+		if (relo) gnm_expr_top_unref (relo);
 	} else
 		gnm_cell_set_value (cell, value_dup (info->val));
+
 	return NULL;
 }
 

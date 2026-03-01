@@ -139,8 +139,8 @@ dao_load_from_value (data_analysis_output_t *dao,
  * @dao:
  *
  * Provides the name of the output range
- * The caller has to dispose of the name
  *
+ * Returns: (transfer full): the name of the output range
  **/
 
 static char *
@@ -849,6 +849,8 @@ dao_set_format (data_analysis_output_t *dao, int col1, int row1,
  * @row1:
  * @col2:
  * @row2:
+ * @fore:
+ * @back:
  *
  * set the given cell range to given background and text colors
  *
@@ -903,13 +905,17 @@ dao_set_align (data_analysis_output_t *dao, int col1, int row1,
  * @row1:
  * @col2:
  * @row2:
+ * @elem:
+ * @border:
+ * @color:
+ * @orientation:
  *
  *
  *
  **/
 void
 dao_set_border (data_analysis_output_t *dao, int col1, int row1,
-	       int col2, int row2,
+		int col2, int row2,
 		GnmStyleElement elem, GnmStyleBorderType border,
 		GnmColor *color,
 		GnmStyleBorderOrientation orientation)

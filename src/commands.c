@@ -312,7 +312,7 @@ select_selection (Sheet *sheet, GSList *selection, WorkbookControl *wbc)
  * @cmd_list: The command list to check.
  *
  * Utility routine to get the descriptor associated
- * Returns: (transfer none): A static reference to a descriptor.
+ * Returns: (transfer none) (nullable): A static reference to a descriptor.
  */
 static char const *
 get_menu_label (GSList *cmd_list)
@@ -541,12 +541,10 @@ command_setup_combos (WorkbookControl *wbc)
 
 /**
  * command_list_release:
- * @cmds: (element-type GObject): the set of commands to free.
+ * @cmds: (transfer full) (element-type GObject): the set of commands to free.
  *
  * command_list_release : utility routine to free the resources associated
  *    with a list of commands.
- *
- * NOTE : remember to NULL the list when you are done.
  */
 void
 command_list_release (GSList *cmd_list)
@@ -1814,7 +1812,7 @@ cmd_format_finalize (GObject *cmd)
  * @sheet: the sheet
  * @style: (transfer full): style to apply to the selection
  * @borders: (nullable) (transfer full): borders to apply to the selection
- * @opt_translated_name: An optional name to use in place of 'Format Cells'
+ * @opt_translated_name: (nullable): A name to use in place of 'Format Cells'
  *
  * If borders is non-%NULL, then the GnmBorder references are passed,
  * the GnmStyle reference is also passed.
@@ -2219,7 +2217,7 @@ MAKE_GNM_COMMAND (CmdColRowHide, cmd_colrow_hide, cmd_colrow_hide_repeat)
  *
  * Added to fix bug 38179
  * Removed because the result is irritating and the bug is actually XL
- * compatibile
+ * compatibility
  **/
 static void
 cmd_colrow_hide_correct_selection (G_GNUC_UNUSED CmdColRowHide *me, G_GNUC_UNUSED WorkbookControl *wbc)
@@ -3698,7 +3696,7 @@ cmd_autoformat_finalize (GObject *cmd)
 /**
  * cmd_selection_autoformat:
  * @wbc: the context.
- * @ft: The format template that was applied
+ * @ft: (transfer full): The format template that was applied
  *
  * Returns: %TRUE if there was a problem, %FALSE otherwise.
  **/
@@ -5958,7 +5956,7 @@ cmd_define_name_finalize (GObject *cmd)
  * @name:
  * @pp:
  * @texpr: (transfer full): #GnmExprTop
- * @descriptor: optional descriptor.
+ * @descriptor: (nullable): Descriptor.
  *
  * If the @name has never been defined in context @pp create a new name
  * If it is a placeholder, assign @texpr to it and make it real
@@ -7237,8 +7235,8 @@ cmd_hyperlink_finalize (GObject *cmd)
  * cmd_selection_hyperlink:
  * @wbc: the workbook control.
  * @style: (transfer full): style to apply to the selection
- * @opt_translated_name: An optional name to use in place of 'Hyperlink Cells'
- * @opt_content: optional content for otherwise empty cells.
+ * @opt_translated_name: (nullable): A name to use in place of 'Hyperlink Cells'
+ * @opt_content: (transfer full) (nullable): content for otherwise empty cells.
  *
  * Returns: %TRUE if there was a problem, %FALSE otherwise.
  **/

@@ -106,6 +106,12 @@ a_strtol (const char *str, char **end)
 	return strtol (str, end, 10);
 }
 
+static gboolean
+length_at_least (const char *str, size_t n)
+{
+	return strnlen (str, n) >= n;
+}
+
 
 /* The maximum numer of character potentially involved in a new line */
 #define MAX_END_OF_LINE_SLOP	16
@@ -354,9 +360,14 @@ applix_get_line (ApplixReadState *state)
 			gsize utf8_len;
 			char *utf8buf = g_convert_with_iconv (&uc, 1, state->converter, NULL,
 							      &utf8_len, NULL);
-			memcpy (buf, utf8buf, utf8_len);
-			buf += utf8_len;
-			g_free (utf8buf);
+			if (utf8buf) {
+				memcpy (buf, utf8buf, utf8_len);
+				buf += utf8_len;
+				g_free (utf8buf);
+			} else {
+				applix_parse_error (state, _("Character encoding error"));
+				*(buf++) = '?';
+			}
 			ptr += 3;
 		}
 	}
@@ -1365,9 +1376,11 @@ applix_read_sheet_table (ApplixReadState *state)
 		       return FALSE;
 
 	       /* Sheet A: ~Foo~ */
+	       if (!length_at_least (ptr, 6))
+		       continue;
 	       std_name = ptr + 6;
 	       ptr = strchr (std_name, ':');
-	       if (ptr == NULL)
+	       if (ptr == NULL || !length_at_least (ptr, 3))
 		       continue;
 	       *ptr = '\0';
 
@@ -1413,7 +1426,7 @@ applix_read_absolute_name (ApplixReadState *state, char *buffer)
 		return TRUE;
 	*end = '\0';
 	end = strchr (end + 1, ':');
-	if (end == NULL)
+	if (end == NULL || !length_at_least (end, 2))
 		return TRUE;
 	applix_rangeref_parse (&ref, end+2,
 		parse_pos_init (&pp, state->wb, NULL, 0, 0),
@@ -1443,7 +1456,7 @@ applix_read_relative_name (ApplixReadState *state, char *buffer)
 	if (buffer == NULL)
 		return TRUE;
 	end = strchr (++buffer, '.');
-	if (end == NULL)
+	if (end == NULL || !length_at_least (end, 2))
 		return TRUE;
 	*end = '\0';
 	if (12 != sscanf (end + 2,
@@ -1573,10 +1586,12 @@ applix_read_impl (ApplixReadState *state)
 			if (applix_read_sheet_table (state))
 				return applix_parse_error (state, "sheet table");
 		} else if (!a_strncmp (buffer, ABS_NAMED_RANGE)) {
-			if (applix_read_absolute_name (state, buffer + sizeof (ABS_NAMED_RANGE)))
+			if (!length_at_least (buffer, sizeof (ABS_NAMED_RANGE)) ||
+			    applix_read_absolute_name (state, buffer + sizeof (ABS_NAMED_RANGE)))
 				return applix_parse_error (state, "Absolute named range");
 		} else if (!a_strncmp (buffer, REL_NAMED_RANGE)) {
-			if (applix_read_relative_name (state, buffer + sizeof (REL_NAMED_RANGE)))
+			if (!length_at_least (buffer, sizeof (REL_NAMED_RANGE)) ||
+			    applix_read_relative_name (state, buffer + sizeof (REL_NAMED_RANGE)))
 				return applix_parse_error (state, "Relative named range");
 		} else if (!a_strncmp (buffer, "Row List")) {
 			if (applix_read_row_list (state, buffer + sizeof ("Row List")))

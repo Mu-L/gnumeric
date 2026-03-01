@@ -553,9 +553,9 @@ sc_parse_fmt (ScParseState *state, char const *cmd, char const *str,
 	GnmCellPos pos = { -1, -1 };
 
 	space = strstr (s, "\"");
-	space--;
-	if (!space)
+	if (space == NULL || space == s)
 		return FALSE;
+	space--;
 
 	res = sc_parse_coord_real (state, s, &pos, space - s);
 	if (!res)

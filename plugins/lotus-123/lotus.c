@@ -1747,131 +1747,173 @@ lotus_get_lmbcs (char const *data, int maxlen, int def_group)
 			break;
 
 		case 0x01: {
-			gunichar uc = lmbcs_group_1[p[1]];
-			if (uc)
-				g_string_append_unichar (res, uc);
-			p += 2;
+			if (p + 1 < theend) {
+				gunichar uc = lmbcs_group_1[p[1]];
+				if (uc)
+					g_string_append_unichar (res, uc);
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x02: {
-			gunichar uc = lmbcs_group_2[p[1]];
-			if (uc)
-				g_string_append_unichar (res, uc);
-			p += 2;
+			if (p + 1 < theend) {
+				gunichar uc = lmbcs_group_2[p[1]];
+				if (uc)
+					g_string_append_unichar (res, uc);
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x03: {
-			guint8 c = p[1];
-			if (c >= 0x80) {
-				gunichar uc = lmbcs_group_3[c - 0x80];
-				if (uc)
-					g_string_append_unichar (res, uc);
-			}
-			p += 2;
+			if (p + 1 < theend) {
+				guint8 c = p[1];
+				if (c >= 0x80) {
+					gunichar uc = lmbcs_group_3[c - 0x80];
+					if (uc)
+						g_string_append_unichar (res, uc);
+				}
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x04: {
-			guint8 c = p[1];
-			if (c >= 0x80) {
-				gunichar uc = lmbcs_group_4[c - 0x80];
-				if (uc)
-					g_string_append_unichar (res, uc);
-			}
-			p += 2;
+			if (p + 1 < theend) {
+				guint8 c = p[1];
+				if (c >= 0x80) {
+					gunichar uc = lmbcs_group_4[c - 0x80];
+					if (uc)
+						g_string_append_unichar (res, uc);
+				}
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x05: {
-			guint8 c = p[1];
-			if (c >= 0x80) {
-				gunichar uc = lmbcs_group_5[c - 0x80];
-				if (uc)
-					g_string_append_unichar (res, uc);
-			}
-			p += 2;
+			if (p + 1 < theend) {
+				guint8 c = p[1];
+				if (c >= 0x80) {
+					gunichar uc = lmbcs_group_5[c - 0x80];
+					if (uc)
+						g_string_append_unichar (res, uc);
+				}
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x06: {
-			gunichar uc = lmbcs_group_6[p[1]];
-			if (uc)
-				g_string_append_unichar (res, uc);
-			p += 2;
+			if (p + 1 < theend) {
+				gunichar uc = lmbcs_group_6[p[1]];
+				if (uc)
+					g_string_append_unichar (res, uc);
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x08: {
-			guint8 c = p[1];
-			if (c >= 0x80) {
-				gunichar uc = lmbcs_group_8[c - 0x80];
-				if (uc)
-					g_string_append_unichar (res, uc);
-			}
-			p += 2;
+			if (p + 1 < theend) {
+				guint8 c = p[1];
+				if (c >= 0x80) {
+					gunichar uc = lmbcs_group_8[c - 0x80];
+					if (uc)
+						g_string_append_unichar (res, uc);
+				}
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x0b: {
-			guint8 c = p[1];
-			if (c >= 0x80) {
-				gunichar uc = lmbcs_group_b[c - 0x80];
-				if (uc)
-					g_string_append_unichar (res, uc);
-			}
-			p += 2;
+			if (p + 1 < theend) {
+				guint8 c = p[1];
+				if (c >= 0x80) {
+					gunichar uc = lmbcs_group_b[c - 0x80];
+					if (uc)
+						g_string_append_unichar (res, uc);
+				}
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x0f: {
-			gunichar uc = lmbcs_group_f[p[1]];
-			if (uc)
-				g_string_append_unichar (res, uc);
-			p += 2;
+			if (p + 1 < theend) {
+				gunichar uc = lmbcs_group_f[p[1]];
+				if (uc)
+					g_string_append_unichar (res, uc);
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x07: case 0x0c: case 0x0e: {
-			unsigned code = (p[0] << 8) | p[1];
-			g_warning ("Unhandled character 0x%04x", code);
-			p += 2;
+			if (p + 1 < theend) {
+				unsigned code = (p[0] << 8) | p[1];
+				g_warning ("Unhandled character 0x%04x", code);
+				p += 2;
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x10: case 0x11: case 0x13:
 		case 0x15: case 0x16: case 0x17: {
-			unsigned code = (p[0] << 16) | (p[1] << 8) | p[2];
-			g_warning ("Unhandled character 0x%06x", code);
-			p += 3;
+			if (p + 2 < theend) {
+				unsigned code = (p[0] << 16) | (p[1] << 8) | p[2];
+				g_warning ("Unhandled character 0x%06x", code);
+				p += 3;
+			} else
+				p = theend;
 			/* See http://www.batutis.com/i18n/papers/lmbcs/ */
 			break;
 		}
 
 		case 0x12: {
-			gunichar uc = lmbcs_12 (p + 1);
-			p += 3;
-			if (uc)
-				g_string_append_unichar (res, uc);
+			if (p + 2 < theend) {
+				gunichar uc = lmbcs_12 (p + 1);
+				p += 3;
+				if (uc)
+					g_string_append_unichar (res, uc);
+			} else
+				p = theend;
 			break;
 		}
 
 		case 0x18: case 0x19: case 0x1a: case 0x1b:
 		case 0x1c: case 0x1d: case 0x1e: case 0x1f:
 			/* Ignore two bytes.  */
-			p += 2;
+			if (p + 1 < theend)
+				p += 2;
+			else
+				p = theend;
 			break;
 
 		case 0x14: {
-			/* Big-endian two-byte unicode with private-
-			   use-area filled in by something.  */
-			gunichar uc = (p[1] << 8) | p[2];
-			if (uc >= 0xe000 && uc <= 0xf8ff) {
-				g_warning ("Unhandled character 0x14%04x", uc);
+			if (p + 2 < theend) {
+				/* Big-endian two-byte unicode with private-
+				   use-area filled in by something.  */
+				gunichar uc = (p[1] << 8) | p[2];
+				if (uc >= 0xe000 && uc <= 0xf8ff) {
+					g_warning ("Unhandled character 0x14%04x", uc);
+				} else
+					g_string_append_unichar (res, uc);
+				p += 3;
 			} else
-				g_string_append_unichar (res, uc);
-			p += 3;
+				p = theend;
 			break;
 		}
 
@@ -1892,7 +1934,13 @@ lotus_get_lmbcs (char const *data, int maxlen, int def_group)
 				case 0x08: if (c >= 0x80) uc = lmbcs_group_8[c - 0x80]; p++; break;
 				case 0x0b: if (c >= 0x80) uc = lmbcs_group_b[c - 0x80]; p++; break;
 				case 0x0f: uc = lmbcs_group_f[c]; p++; break;
-				case 0x12: uc = lmbcs_12 (p); p += 2; break;
+				case 0x12:
+					if (p + 1 < theend) {
+						uc = lmbcs_12 (p);
+						p += 2;
+					} else
+						p = theend;
+					break;
 				default:
 					g_warning ("Unhandled character set 0x%x", def_group);
 					p++;
@@ -2958,8 +3006,7 @@ lotus_read_works (LotusState *state, record_t *r)
 			int fid = fontidx++;
 			int l;
 			font->variant = GSF_LE_GET_GUINT16(r->data + 0);
-			l = strlen (r->data + 2);
-			if (l > 34) l = 34;
+			l = strnlen (r->data + 2, 34);
 			font->typeface = g_malloc (l + 1);
 			/* verify UTF-8? */
 			memcpy (font->typeface, r->data + 2, l);

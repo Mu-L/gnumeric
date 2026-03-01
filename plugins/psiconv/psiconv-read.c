@@ -58,120 +58,113 @@ psi_new_string (psiconv_ucs2 const *data)
 
 
 static void
-append_zeros (char *s, int n)
-{
-	if (n > 0) {
-		s = s + strlen (s);
-		*s++ = '.';
-		while (n--)
-			*s++ = '0';
-		*s = 0;
-	}
-}
-
-
-static GnmCellRef *
-p_cellref_init (GnmCellRef *res,
-		int row, gboolean row_abs,
-		int col, gboolean col_abs)
-{
-	res->sheet = NULL;
-	res->row = row;
-	res->col = col;
-	res->row_relative = row_abs ? 0 : 1;
-	res->col_relative = col_abs ? 0 : 1;
-	return res;
-}
-
-static void
 set_format (GnmStyle *style, const psiconv_sheet_numberformat psi_numberformat)
 {
-	/* 100 should be long enough, but to be really safe, use strncpy */
-	char fmt_string[100];
+	GString *fmt = g_string_new (NULL);
+	int i, n;
 
 	/* TODO: Dates and times are still wrong. What about localisation? */
-	strcpy (fmt_string,"");
         if (psi_numberformat->code == psiconv_numberformat_fixeddecimal) {
-		strcpy (fmt_string,"0");
-		append_zeros (fmt_string, psi_numberformat->decimal);
+		g_string_append (fmt, "0");
         } else if (psi_numberformat->code == psiconv_numberformat_scientific) {
-		strcpy (fmt_string,"0");
-		append_zeros (fmt_string, psi_numberformat->decimal);
-		strcat (fmt_string, "E+00");
+		g_string_append (fmt, "0");
         } else if (psi_numberformat->code == psiconv_numberformat_currency) {
 		/* TODO: Determine currency symbol somehow */
-		strcpy (fmt_string,"$0");
-		append_zeros (fmt_string, psi_numberformat->decimal);
+		g_string_append (fmt, "$0");
 	} else if (psi_numberformat->code == psiconv_numberformat_percent) {
-		strcpy (fmt_string,"0");
-		append_zeros (fmt_string, psi_numberformat->decimal);
-		strcat (fmt_string, "%");
+		g_string_append (fmt, "0");
 	} else if (psi_numberformat->code == psiconv_numberformat_triads) {
-		strcpy (fmt_string,"#,##0");
-		append_zeros (fmt_string, psi_numberformat->decimal);
+		g_string_append (fmt, "#,##0");
 	} else if (psi_numberformat->code == psiconv_numberformat_text) {
-		strcpy (fmt_string,"@");
+		g_string_append (fmt, "@");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_dmm) {
-		strcpy (fmt_string,"d-mm");
+		g_string_append (fmt, "d-mm");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_mmd) {
-		strcpy (fmt_string,"mm-d");
+		g_string_append (fmt, "mm-d");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_ddmmyy) {
-		strcpy (fmt_string,"dd-mm-yy");
+		g_string_append (fmt, "dd-mm-yy");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_mmddyy) {
-		strcpy (fmt_string,"mm-dd-yy");
+		g_string_append (fmt, "mm-dd-yy");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_yymmdd) {
-		strcpy (fmt_string,"yy-mm-dd");
+		g_string_append (fmt, "yy-mm-dd");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_dmmm) {
-		strcpy (fmt_string,"d mmm");
+		g_string_append (fmt, "d mmm");
 	} else if (psi_numberformat->code == psiconv_numberformat_date_dmmmyy) {
-		strcpy (fmt_string,"d mmm yy");
+		g_string_append (fmt, "d mmm yy");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_date_ddmmmyy) {
-		strcpy (fmt_string,"dd mmm yy");
+		g_string_append (fmt, "dd mmm yy");
 	} else if (psi_numberformat->code ==
-                   psiconv_numberformat_date_mmm) { strcpy (fmt_string,"mmm");
+                   psiconv_numberformat_date_mmm) {
+		g_string_append (fmt, "mmm");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_date_monthname) {
-		strcpy (fmt_string,"mmmm");
+		g_string_append (fmt, "mmmm");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_date_mmmyy) {
-		strcpy (fmt_string,"mmm yy");
+		g_string_append (fmt, "mmm yy");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_date_monthnameyy) {
-		strcpy (fmt_string,"mmmm yy");
+		g_string_append (fmt, "mmmm yy");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_date_monthnamedyyyy) {
-		strcpy (fmt_string,"mmmm d, yyyy");
+		g_string_append (fmt, "mmmm d, yyyy");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_ddmmyyyyhhii) {
-		strcpy (fmt_string,"dd-mm-yyyy h:mm AM/PM");
+		g_string_append (fmt, "dd-mm-yyyy h:mm AM/PM");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_ddmmyyyyHHii) {
-		strcpy (fmt_string,"dd-mm-yyyy h:mm");
+		g_string_append (fmt, "dd-mm-yyyy h:mm");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_mmddyyyyhhii) {
-		strcpy (fmt_string,"mm-dd-yyyy h:mm AM/PM");
+		g_string_append (fmt, "mm-dd-yyyy h:mm AM/PM");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_mmddyyyyHHii) {
-		strcpy (fmt_string,"mm-dd-yyyy h:mm");
+		g_string_append (fmt, "mm-dd-yyyy h:mm");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_yyyymmddhhii) {
-		strcpy (fmt_string,"yyyy-mm-dd h:mm AM/PM");
+		g_string_append (fmt, "yyyy-mm-dd h:mm AM/PM");
 	} else if (psi_numberformat->code ==
                    psiconv_numberformat_datetime_yyyymmddHHii) {
-		strcpy (fmt_string,"yyyy-mm-dd h:mm");
+		g_string_append (fmt, "yyyy-mm-dd h:mm");
 	} else if (psi_numberformat->code == psiconv_numberformat_time_hhii) {
-		strcpy (fmt_string,"h:mm AM/PM");
+		g_string_append (fmt, "h:mm AM/PM");
 	} else if (psi_numberformat->code == psiconv_numberformat_time_hhiiss) {
-		strcpy (fmt_string,"h:mm:ss AM/PM");
+		g_string_append (fmt, "h:mm:ss AM/PM");
 	} else if (psi_numberformat->code == psiconv_numberformat_time_HHii) {
-		strcpy (fmt_string,"h:mm");
+		g_string_append (fmt, "h:mm");
 	} else if (psi_numberformat->code == psiconv_numberformat_time_HHiiss) {
-		strcpy (fmt_string,"h:mm:ss");
+		g_string_append (fmt, "h:mm:ss");
 	}  /* TODO: Add True/False */
 
-	if (fmt_string[0])
-		gnm_style_set_format_text (style, fmt_string);
+	switch (psi_numberformat->code) {
+	case psiconv_numberformat_fixeddecimal:
+	case psiconv_numberformat_scientific:
+	case psiconv_numberformat_currency:
+	case psiconv_numberformat_percent:
+	case psiconv_numberformat_triads:
+		n = psi_numberformat->decimal;
+		if (n > 0) {
+			/* Cap at 30, which is Gnumeric's internal limit */
+			if (n > 30) n = 30;
+			g_string_append_c (fmt, '.');
+			for (i = 0; i < n; i++)
+				g_string_append_c (fmt, '0');
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (psi_numberformat->code == psiconv_numberformat_scientific)
+		g_string_append (fmt, "E+00");
+	else if (psi_numberformat->code == psiconv_numberformat_percent)
+		g_string_append (fmt, "%");
+
+	if (fmt->len > 0)
+		gnm_style_set_format_text (style, fmt->str);
+
+	g_string_free (fmt, TRUE);
 }
 
 static GnmColor *

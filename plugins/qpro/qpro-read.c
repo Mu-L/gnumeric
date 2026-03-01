@@ -136,10 +136,11 @@ q_condition_barf (QProReadState *state, const char *cond)
 
 
 static GnmValue *
-qpro_new_string (QProReadState *state, gchar const *data)
+qpro_new_string (QProReadState *state, gchar const *data, gssize maxlen)
 {
+	gsize len = (maxlen < 0) ? strlen (data) : strnlen (data, maxlen);
 	return value_new_string_nocopy (
-		g_convert_with_iconv (data, -1, state->converter,
+		g_convert_with_iconv (data, len, state->converter,
 				      NULL, NULL, NULL));
 }
 
@@ -493,10 +494,12 @@ qpro_parse_formula (QProReadState *state, int col, int row,
 			fmla += 2;
 			break;
 
-		case QPRO_OP_CONST_STR:
-			expr = gnm_expr_new_constant (qpro_new_string (state, fmla));
-			fmla += strlen (fmla) + 1;
+		case QPRO_OP_CONST_STR: {
+			gsize l = strnlen (fmla, refs - fmla);
+			expr = gnm_expr_new_constant (qpro_new_string (state, fmla, l));
+			fmla += l + 1;
 			break;
+		}
 
 		case QPRO_OP_DEFAULT_ARG:
 			expr = gnm_expr_new_constant (value_new_empty ());
@@ -651,7 +654,7 @@ qpro_parse_formula (QProReadState *state, int col, int row,
 		/* Be anal */
 		Q_CHECK_CONDITION (col == new_col && row == new_row);
 
-		val = qpro_new_string (state, data + 7);
+		val = qpro_new_string (state, data + 7, len - 7);
 		break;
 	}
 	default:
@@ -781,7 +784,7 @@ qpro_read_sheet (QProReadState *state)
 				}
 
 				gnm_cell_assign_value (sheet_cell_fetch (sheet, col, row),
-						   qpro_new_string (state, data + 7));
+						   qpro_new_string (state, data + 7, len - 7));
 			}
 			break;
 
@@ -813,10 +816,9 @@ qpro_read_sheet (QProReadState *state)
 
 		case QPRO_PAGE_NAME:
 			if (validate (QPRO_PAGE_NAME, -1)) {
-				char *utf8name =
-					g_convert_with_iconv (data, -1,
-							      state->converter,
-							      NULL, NULL, NULL);
+				GnmValue *v = qpro_new_string (state, data, len);
+				char *utf8name = g_strdup (value_peek_string (v));
+				value_release (v);
 #warning "This is wrong, but the workbook interface is confused and needs a control."
 				g_object_set (sheet, "name", utf8name, NULL);
 				g_free (utf8name);

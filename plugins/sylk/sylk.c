@@ -75,6 +75,12 @@ sylk_read_warning (SylkReader *state, char const *fmt, ...)
 	g_free (msg);
 }
 
+static gboolean
+length_at_least (const char *str, size_t n)
+{
+	return strnlen (str, n) >= n;
+}
+
 static char *
 sylk_next_token (char *src)
 {
@@ -135,7 +141,7 @@ sylk_next_token (char *src)
 			}
 		} else if (src[0] == 0x1B) { /* escape */
 			gunichar u;
-			if (src[1] != 'N') { /* must be <ESC>N? */
+			if (!length_at_least (src, 3) || src[1] != 'N') { /* must be <ESC>N? */
 				src++;
 				continue;
 			} else if (src[2] <= 0x20 || 0x7f <= src[2]) { /* out of range */
@@ -148,7 +154,7 @@ sylk_next_token (char *src)
 			} else { /* accents 0x40 - 0x4F */
 				char *merged = NULL;
 				int accent = accents[src[2] - 0x40];
-				if (accent >= 0) {
+				if (accent >= 0 && length_at_least (src, 4)) {
 					char buf[6];
 					int len = g_unichar_to_utf8 (0x300 + accent, buf+1);
 					buf[0] = src[3];
@@ -160,8 +166,10 @@ sylk_next_token (char *src)
 					}
 				}
 					/* fallback to the unaccented char */
-				if (NULL == merged)
-					*dst++ = src[3];
+				if (NULL == merged) {
+					if (length_at_least (src, 4))
+						*dst++ = src[3];
+				}
 				src += 4;
 				continue;
 			}

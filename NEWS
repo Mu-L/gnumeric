@@ -2,6 +2,7 @@ Gnumeric 1.12.61
 
 Morten:
 	* Up gtk+ requirement to 3.20.  Still ancient.
+	* Audit code with Gemini AI.
 
 --------------------------------------------------------------------------
 Gnumeric 1.12.60

@@ -306,7 +306,7 @@ stf_dialog (WBCGtk *wbcg,
 		dialogresult->text = pagedata.utf8_data;
 		*((char *)pagedata.cur_end) = 0;
 		if (dialogresult->text != pagedata.cur)
-			strcpy (dialogresult->text, pagedata.cur);
+			memmove (dialogresult->text, pagedata.cur, strlen (pagedata.cur) + 1);
 		pagedata.cur = pagedata.utf8_data = NULL;
 
 		dialogresult->encoding = pagedata.encoding;

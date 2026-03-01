@@ -357,6 +357,16 @@ xbase_open (GsfInput *input, GOErrorInfo **ret_error)
 		XBfield *field = xbase_field_new (ans);
 		if (!field)
 			break;
+
+		/* Validation: ensure field fits within the record size */
+		if (field->pos + field->len >= ans->fieldlen) {
+			g_warning ("Field '%s' (at pos %u, len %u) exceeds record size (%u)",
+				   field->name, field->pos, (unsigned)field->len, ans->fieldlen);
+			go_format_unref (field->fmt);
+			g_free (field);
+			break;
+		}
+
 		if (ans->fields == allocated) {
 			allocated *= 2;
 			ans->format = g_renew (XBfield *, ans->format, allocated);

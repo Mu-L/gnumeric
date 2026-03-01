@@ -3137,6 +3137,17 @@ gnm_expr_top_get_range (GnmExprTop const *texpr)
 	return gnm_expr_get_range (texpr->expr);
 }
 
+/**
+ * gnm_expr_top_as_string:
+ * @texpr: Expression
+ * @pp: (nullable): Parse position.  %NULL should be used for debugging only.
+ * @convs: (nullable): #GnmConventions.  %NULL should be used for debugging
+ * or when @pp identifies a #Sheet.
+ *
+ * Renders the expression as a string according to @convs.
+ *
+ * Returns: (transfer full): @texpr as a string.
+ */
 char *
 gnm_expr_top_as_string (GnmExprTop const *texpr,
 			GnmParsePos const *pp,

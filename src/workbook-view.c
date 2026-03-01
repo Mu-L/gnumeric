@@ -1067,9 +1067,10 @@ GSF_CLASS (WorkbookView, workbook_view,
 
 /**
  * workbook_view_new:
- * @wb: (allow-none) (transfer full): #Workbook
+ * @wb: (nullable) (transfer full): #Workbook
  *
- * Returns: A new #WorkbookView for @wb (or a fresh one if that is %NULL).
+ * Returns: (transfer full): A new #WorkbookView for @wb (or a fresh one
+ * if that is %NULL).
  **/
 WorkbookView *
 workbook_view_new (Workbook *wb)

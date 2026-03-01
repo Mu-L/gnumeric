@@ -399,7 +399,7 @@ workbook_class_init (GObjectClass *gobject_class)
 /**
  * workbook_new:
  *
- * Returns: A new empty #Workbook with a unique name.
+ * Returns: (transfer full): A new empty #Workbook with a unique name.
  **/
 Workbook *
 workbook_new (void)
@@ -449,7 +449,7 @@ workbook_sheet_name_strip_number (char *name, unsigned int *number)
  * workbook_new_with_sheets:
  * @sheet_count: initial number of sheets to create.
  *
- * Returns: a #Workbook with @sheet_count allocated
+ * Returns: (transfer full): a #Workbook with @sheet_count allocated
  * sheets on it
  */
 Workbook *

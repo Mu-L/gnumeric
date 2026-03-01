@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnumeric-ui master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnumeric/issues\n"
-"POT-Creation-Date: 2026-02-02 01:02+0000\n"
-"PO-Revision-Date: 2026-02-02 08:14+0100\n"
+"POT-Creation-Date: 2026-03-01 18:27+0000\n"
+"PO-Revision-Date: 2026-03-01 20:09+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -76,25 +76,29 @@ msgstr ""
 msgid "The Gnumeric Team"
 msgstr "Skupina Gnumeric"
 
-#: ../plugins/applix/applix-read.c:124
+#: ../plugins/applix/applix-read.c:130
 msgid "Parse error while reading Applix file."
 msgstr "Napaka razčlenjevanja med branjem datoteke Applix."
 
-#: ../plugins/applix/applix-read.c:345
+#: ../plugins/applix/applix-read.c:351
 msgid "Missing characters for character encoding"
 msgstr "Manjkajo ustrezni znaki za določitev nabora znakov"
 
-#: ../plugins/applix/applix-read.c:349
+#: ../plugins/applix/applix-read.c:355
 #, c-format
 msgid "Invalid characters for encoding '%c%c'"
 msgstr "Neveljavni znaki za nabor »%c%c«"
 
-#: ../plugins/applix/applix-read.c:1234
+#: ../plugins/applix/applix-read.c:368
+msgid "Character encoding error"
+msgstr "Napaka pri kodiranju znakov"
+
+#: ../plugins/applix/applix-read.c:1247
 #, c-format
 msgid "Expression did not start with '=' ? '%s'"
 msgstr "Ali izraz morda ni začet z znakom »=« ? »%s«"
 
-#: ../plugins/applix/applix-read.c:1245
+#: ../plugins/applix/applix-read.c:1258
 #, c-format
 msgid ""
 "%s!%s : unable to parse '%s'\n"
@@ -116,7 +120,7 @@ msgid "Applix (*.as)"
 msgstr "Applix (*.as)"
 
 #: ../plugins/dif/dif.c:69 ../plugins/excel/ms-excel-read.c:7224
-#: ../plugins/openoffice/openoffice-read.c:14203 ../src/xml-sax-read.c:3645
+#: ../plugins/openoffice/openoffice-read.c:14203 ../src/xml-sax-read.c:3656
 msgid "Reading file..."
 msgstr "Branje datoteke ..."
 
@@ -224,7 +228,7 @@ msgstr ""
 "Neveljavna vsebina predmeta ss:predmet podatka; vrnjena je vrednost »%s«."
 
 #: ../plugins/excel/excel-xml-read.c:1215
-#: ../plugins/openoffice/openoffice-read.c:14397 ../src/xml-sax-read.c:3662
+#: ../plugins/openoffice/openoffice-read.c:14397 ../src/xml-sax-read.c:3673
 msgid "XML document not well formed!"
 msgstr "Dokument XML ni ustrezno oblikovan!"
 
@@ -233,7 +237,7 @@ msgid "#UNKNOWN!"
 msgstr "#NEZNANO!"
 
 #: ../plugins/excel/ms-excel-read.c:1489 ../plugins/excel/ms-excel-read.c:1500
-#: ../plugins/oleo/oleo.c:229 ../plugins/psiconv/psiconv-read.c:542
+#: ../plugins/oleo/oleo.c:229 ../plugins/psiconv/psiconv-read.c:535
 #, c-format
 msgid "Sheet%d"
 msgstr "Delovni list%d"
@@ -2203,15 +2207,15 @@ msgstr "Uvažanje datotek programa Psion 5"
 msgid "Psion (*.psisheet)"
 msgstr "Psion (*.psisheet)"
 
-#: ../plugins/psiconv/psiconv-read.c:650
+#: ../plugins/psiconv/psiconv-read.c:643
 msgid "Error while reading psiconv file."
 msgstr "Napaka med branjem datoteke psiconv."
 
-#: ../plugins/psiconv/psiconv-read.c:661
+#: ../plugins/psiconv/psiconv-read.c:654
 msgid "Error while parsing Psion file."
 msgstr "Napaka med razčlenjevanjem datoteke Psion."
 
-#: ../plugins/psiconv/psiconv-read.c:669
+#: ../plugins/psiconv/psiconv-read.c:662
 msgid "This Psion file is not a Sheet file."
 msgstr "Datoteka Psion ni datoteka razpredelnice."
 
@@ -2368,17 +2372,17 @@ msgstr "Quattro Pro (*.wb1, *.wb2, *.wb3)"
 msgid "File is most likely corrupted.\n"
 msgstr "Datoteka je najverjetneje okvarjena.\n"
 
-#: ../plugins/qpro/qpro-read.c:869
+#: ../plugins/qpro/qpro-read.c:871
 #, c-format
 msgid "Invalid zoom %hd %%"
 msgstr "Neveljavno približanje za %hd %%"
 
-#: ../plugins/qpro/qpro-read.c:911
+#: ../plugins/qpro/qpro-read.c:913
 #, c-format
 msgid "Invalid record %d of length %hd"
 msgstr "Neveljaven zapis %d dolžine %hd"
 
-#: ../plugins/qpro/qpro-read.c:944
+#: ../plugins/qpro/qpro-read.c:946
 msgid ""
 "Unable to find the PerfectOffice_MAIN stream.  Is this really a Quattro Pro "
 "file?"
@@ -2463,19 +2467,19 @@ msgstr "MultiPlan (SYLK)"
 msgid "Import/Export for MultiPlan (SYLK) files"
 msgstr "Ivoz/Izvoz datotek MultiPlan (SYLK)"
 
-#: ../plugins/sylk/sylk.c:243
+#: ../plugins/sylk/sylk.c:251
 msgid "Multiple values in the same cell"
 msgstr "Več vrednosti v isti celici"
 
-#: ../plugins/sylk/sylk.c:252 ../plugins/sylk/sylk.c:261
+#: ../plugins/sylk/sylk.c:260 ../plugins/sylk/sylk.c:269
 msgid "Multiple expressions in the same cell"
 msgstr "V isti celici je določenih več izrazov."
 
-#: ../plugins/sylk/sylk.c:798
+#: ../plugins/sylk/sylk.c:806
 msgid "Missing closing 'E'"
 msgstr "Manjka zaključni 'E'"
 
-#: ../plugins/sylk/sylk.c:821 ../src/dialogs/dialog-goto-cell.c:380
+#: ../plugins/sylk/sylk.c:829 ../src/dialogs/dialog-goto-cell.c:380
 #: ../src/dialogs/dialog-search.c:437 ../src/dialogs/dialog-stf-export.c:594
 #: ../src/dialogs/hf-config.ui.h:16 ../src/dialogs/print.ui.h:53
 #: ../src/dialogs/sheet-compare.ui.h:3 ../src/print-info.c:571
@@ -9203,26 +9207,21 @@ msgstr "Ne izberi _ničesar"
 
 #: ../src/dialogs/dialog-stf-export.ui.h:28
 msgid ""
-"Move the selected sheet to the top of the list of sheets to "
-"be exported first."
+"Move the selected sheet to the top of the list of sheets to be exported "
+"first."
 msgstr "Premakni izbrane delovne liste na začetek seznama za izvoz."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:29
-msgid ""
-"Raise the selected sheet in the list of sheets to be exported "
-"earlier."
+msgid "Raise the selected sheet in the list of sheets to be exported earlier."
 msgstr "Premakni izbrane delovne liste višje na seznamu za izvoz."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:30
-msgid ""
-"Lower the selected sheet in the list of sheets to be exported "
-"later."
+msgid "Lower the selected sheet in the list of sheets to be exported later."
 msgstr "Premakni izbrane delovne liste nižje na seznamu za izvoz."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:31
 msgid ""
-"Move the selected sheet to the end of the list of sheets to "
-"be exported last."
+"Move the selected sheet to the end of the list of sheets to be exported last."
 msgstr "Premakni izbrane delovne liste na konec seznama za izvoz."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:32
@@ -12713,16 +12712,16 @@ msgstr "Ni mogoče odpreti naslova URL »%s«"
 msgid "Unable to open '%s'"
 msgstr "Ni mogoče odpreti »%s«"
 
-#: ../src/item-bar.c:867
+#: ../src/item-bar.c:857
 msgid "Width:"
 msgstr "Širina:"
 
-#: ../src/item-bar.c:867
+#: ../src/item-bar.c:857
 msgid "Height:"
 msgstr "Višina:"
 
 #. xgettext: This is input to ngettext based on the number of pixels.
-#: ../src/item-bar.c:872
+#: ../src/item-bar.c:862
 #, c-format
 msgid "(%d pixel)"
 msgid_plural "(%d pixels)"
@@ -12732,18 +12731,18 @@ msgstr[2] "(%d točki)"
 msgstr[3] "(%d točke)"
 
 #. xgettext: This is input to ngettext based on the integer number of points.
-#: ../src/item-bar.c:877
+#: ../src/item-bar.c:867
 #, c-format
 msgid "%d.00 pt"
 msgstr "%d.00 točk"
 
-#: ../src/item-bar.c:877
+#: ../src/item-bar.c:867
 #, c-format
 msgid "%d.00 pts"
 msgstr "%d.00 znakovnih točk"
 
 #. xgettext: The number of points here is always a fractional number, ie. not an integer.
-#: ../src/item-bar.c:881
+#: ../src/item-bar.c:871
 #, c-format
 msgid "%.2f pts"
 msgstr "%.2f znakovnih točk"
@@ -18393,7 +18392,7 @@ msgstr "zvezek%d.%s"
 msgid "Graph"
 msgstr "Graf"
 
-#: ../src/workbook.c:1678
+#: ../src/workbook.c:1679
 #, c-format
 msgid "Renaming sheet"
 msgid_plural "Renaming %d sheets"
@@ -18402,7 +18401,7 @@ msgstr[1] "Preimenovanje %d delovnega lista"
 msgstr[2] "Preimenovanje %d delovnih listov"
 msgstr[3] "Preimenovanje %d delovnih listov"
 
-#: ../src/workbook.c:1680
+#: ../src/workbook.c:1681
 #, c-format
 msgid "Adding sheet"
 msgid_plural "Adding %d sheets"
@@ -18415,7 +18414,7 @@ msgstr[3] "Dodajanje %d delovnih listov"
 #. * This is most likely just a sheet inserted, but it just
 #. * might be a compound operation.  Lie.
 #.
-#: ../src/workbook.c:1686
+#: ../src/workbook.c:1687
 #, c-format
 msgid "Inserting sheet"
 msgid_plural "Inserting %d sheets"
@@ -18424,11 +18423,11 @@ msgstr[1] "Vstavljanje %d delovnega lista"
 msgstr[2] "Vstavljanje %d delovnih listov"
 msgstr[3] "Vstavljanje %d delovnih listov"
 
-#: ../src/workbook.c:1688
+#: ../src/workbook.c:1689
 msgid "Changing sheet tab colors"
 msgstr "Spreminjanje barve zavihkov delovnih listov"
 
-#: ../src/workbook.c:1690
+#: ../src/workbook.c:1691
 msgid "Changing sheet properties"
 msgstr "Spreminjanje lastnosti delovnega lista"
 
@@ -18436,7 +18435,7 @@ msgstr "Spreminjanje lastnosti delovnega lista"
 #. * This is most likely just a sheet delete, but it just
 #. * might be a compound operation.  Lie.
 #.
-#: ../src/workbook.c:1697
+#: ../src/workbook.c:1698
 #, c-format
 msgid "Deleting sheet"
 msgid_plural "Deleting %d sheets"
@@ -18445,11 +18444,11 @@ msgstr[1] "Brisanje %d delovnega lista"
 msgstr[2] "Brisanje %d delovnih listov"
 msgstr[3] "Brisanje %d delovnih listov"
 
-#: ../src/workbook.c:1699
+#: ../src/workbook.c:1700
 msgid "Changing sheet order"
 msgstr "Spreminjanje vrstnega reda razpredelnice"
 
-#: ../src/workbook.c:1701
+#: ../src/workbook.c:1702
 msgid "Reorganizing Sheets"
 msgstr "Prerazporejanje listov preglednice"
 
@@ -18466,34 +18465,34 @@ msgstr "atribut pogleda delovnega zvezka je nepopoln"
 msgid "File has inconsistent SheetNameIndex element."
 msgstr "Datoteka vsebuje neskladni predmet imena delovnega lista."
 
-#: ../src/xml-sax-read.c:2461
+#: ../src/xml-sax-read.c:2472
 #, c-format
 msgid "Unknown filter operator \"%s\""
 msgstr "Neznan operator filtra \"%s\""
 
-#: ../src/xml-sax-read.c:2503
+#: ../src/xml-sax-read.c:2514
 msgid "Missing filter type"
 msgstr "Manjka vrsta filtra"
 
-#: ../src/xml-sax-read.c:2516
+#: ../src/xml-sax-read.c:2527
 msgid "Malformed sheet filter condition"
 msgstr "Nepravilno oblikovan pogoj filtriranja delovnega lista"
 
-#: ../src/xml-sax-read.c:2530
+#: ../src/xml-sax-read.c:2541
 #, c-format
 msgid "Unknown filter type \"%s\""
 msgstr "Neznana vrsta filtra \"%s\""
 
-#: ../src/xml-sax-read.c:2551
+#: ../src/xml-sax-read.c:2562
 msgid "Invalid filter, missing Area"
 msgstr "Neveljaven filter, ker manjka obseg vrednosti"
 
-#: ../src/xml-sax-read.c:2616
+#: ../src/xml-sax-read.c:2627
 #, c-format
 msgid "Unsupported object type '%s'"
 msgstr "Nepodprta vrsta predmeta »%s«"
 
-#: ../src/xml-sax-read.c:3929 ../src/xml-sax-write.c:1743
+#: ../src/xml-sax-read.c:3940 ../src/xml-sax-write.c:1743
 msgid "Gnumeric XML (*.gnumeric)"
 msgstr "Gnumeric XML (*.gnumeric)"
 

@@ -565,6 +565,8 @@ dialog_cell_sort_load_sort_setup (SortFlowState *state, GnmSortData const *data)
 					    ITEM_MOVE_FORMAT, TRUE,
 					    ITEM_NUMBER, id,
 					    -1);
+			g_free (str);
+			g_free (header);
 			state->sort_items++;
 		}
 	}

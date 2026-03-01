@@ -548,7 +548,7 @@ merge_single_names (Workbook *wb, Workbook *wb2, GOCmdContext *cc)
 
 		/* Move name scope to workbook wb */
 		newpos.wb = wb;
-		expr_name_set_pos (nexpr, &newpos);
+		expr_name_set_pos (nexpr, &newpos, NULL);
 	}
 	g_slist_free (names);
 
@@ -592,7 +592,7 @@ merge_single (Workbook *wb, Workbook *wb2,
 			if (nexpr->pos.wb) {
 				GnmParsePos newpos = nexpr->pos;
 				newpos.wb = wb;
-				expr_name_set_pos (nexpr, &newpos);
+				expr_name_set_pos (nexpr, &newpos, NULL);
 			}
 			expr_name_unref (nexpr);
 		}

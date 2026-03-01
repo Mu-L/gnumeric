@@ -46,7 +46,8 @@ gboolean expr_name_is_placeholder (GnmNamedExpr const *ne);
 
 char    *expr_name_as_string  (GnmNamedExpr const *nexpr, GnmParsePos const *pp,
 			       GnmConventions const *fmt);
-char    *expr_name_set_pos    (GnmNamedExpr *nexpr, GnmParsePos const *pp);
+gboolean expr_name_set_pos    (GnmNamedExpr *nexpr, GnmParsePos const *pp,
+			       char **why);
 void	 expr_name_set_expr   (GnmNamedExpr *nexpr, GnmExprTop const *texpr);
 void	 expr_name_add_dep    (GnmNamedExpr *nexpr, GnmDependent *dep);
 void	 expr_name_remove_dep (GnmNamedExpr *nexpr, GnmDependent *dep);

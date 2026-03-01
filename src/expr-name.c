@@ -948,26 +948,34 @@ expr_name_downgrade_to_placeholder (GnmNamedExpr *nexpr)
  * expr_name_set_pos:
  * @nexpr: the named expression
  * @pp: the new position
+ * @why: (out) (optional) (nullable): a translated error string in
+ *       case of errors.
  *
- * Returns: (transfer full): a translated error string in case of errors.
+ * Returns: %TRUE in case of error.
  **/
-char *
-expr_name_set_pos (GnmNamedExpr *nexpr, GnmParsePos const *pp)
+gboolean
+expr_name_set_pos (GnmNamedExpr *nexpr, GnmParsePos const *pp, char **why)
 {
 	GnmNamedExprCollection *old_scope, *new_scope;
 
-	g_return_val_if_fail (nexpr != NULL, NULL);
-	g_return_val_if_fail (pp != NULL, NULL);
+	if (why)
+		*why = NULL;
+
+	g_return_val_if_fail (nexpr != NULL, TRUE);
+	g_return_val_if_fail (pp != NULL, TRUE);
 
 	old_scope = nexpr->scope;
 	new_scope = pp->sheet ? pp->sheet->names : pp->wb->names;
 
 	if (old_scope != new_scope &&
 	    (g_hash_table_lookup (new_scope->names, nexpr->name))) {
-		const char *fmt = pp->sheet
-			? _("'%s' is already defined in sheet")
-			: _("'%s' is already defined in workbook");
-		return g_strdup_printf (fmt, nexpr->name);
+		if (why) {
+			const char *fmt = pp->sheet
+				? _("'%s' is already defined in sheet")
+				: _("'%s' is already defined in workbook");
+			*why = g_strdup_printf (fmt, nexpr->name);
+		}
+		return TRUE;
 	}
 
 	if (old_scope)
@@ -975,7 +983,8 @@ expr_name_set_pos (GnmNamedExpr *nexpr, GnmParsePos const *pp)
 
 	nexpr->pos = *pp;
 	gnm_named_expr_collection_insert (new_scope, nexpr);
-	return NULL;
+
+	return FALSE;
 }
 
 /**

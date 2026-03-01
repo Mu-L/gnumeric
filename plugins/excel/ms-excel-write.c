@@ -4156,7 +4156,7 @@ excel_write_autofilter_names (ExcelWriteState *ewb)
 				nexpr = expr_name_new (name);
 
 			nexpr->is_hidden = TRUE;
-			expr_name_set_pos (nexpr, &pp);
+			expr_name_set_pos (nexpr, &pp, NULL);
 			expr_name_set_expr (nexpr,
 					    gnm_expr_top_new_constant
 					    (value_new_cellrange_r (sheet, &filter->r)));

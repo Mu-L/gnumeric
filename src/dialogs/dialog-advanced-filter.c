@@ -120,7 +120,7 @@ advanced_filter_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	criteria = gnm_expr_entry_parse_as_value
 		(state->input_entry_2, state->sheet);
 
-        dao  = parse_output ((GnmGenericToolState *) state, NULL);
+        dao  = dao_parse_output ((GnmGenericToolState *) state);
 
 	w = go_gtk_builder_get_widget (state->gui, "unique-button");
 	unique = (1 == gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)));

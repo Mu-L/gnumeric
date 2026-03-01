@@ -635,7 +635,7 @@ corr_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->warning_dialog);
 
 	data = g_new0 (analysis_tools_data_generic_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->input_entry), state->sheet);
@@ -755,7 +755,7 @@ cov_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->warning_dialog);
 
 	data = g_new0 (analysis_tools_data_generic_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->input_entry), state->sheet);
@@ -871,7 +871,7 @@ rank_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget *w;
 
 	data = g_new0 (analysis_tools_data_ranking_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->input_entry), state->sheet);
@@ -963,7 +963,7 @@ fourier_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget               *w;
 
 	data = g_new0 (analysis_tools_data_fourier_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->base.wbc = GNM_WBC (state->wbcg);
 	data->base.input = gnm_expr_entry_parse_as_list (
@@ -1056,7 +1056,7 @@ cb_desc_stat_tool_ok_clicked (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget *w;
 
 	data = g_new0 (analysis_tools_data_descriptive_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -1320,7 +1320,7 @@ ttest_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	int    err = 0;
 
 	data = g_new0 (analysis_tools_data_ttests_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.wbc = GNM_WBC (state->base.wbcg);
 
@@ -1707,7 +1707,7 @@ ftest_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget *w;
 
 	data = g_new0 (analysis_tools_data_generic_b_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->wbc = GNM_WBC (state->base.wbcg);
 
@@ -1932,7 +1932,7 @@ sampling_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget *w;
 
 	data = g_new0 (analysis_tools_data_sampling_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.wbc = GNM_WBC (state->base.wbcg);
 
@@ -2172,7 +2172,7 @@ regression_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->base.warning_dialog);
 
 	data = g_new0 (analysis_tools_data_regression_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.wbc = GNM_WBC (state->base.wbcg);
 
@@ -2503,7 +2503,7 @@ exp_smoothing_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget               *w;
 
 	data = g_new0 (analysis_tools_data_exponential_smoothing_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -2850,7 +2850,7 @@ average_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget               *w;
 
 	data = g_new0 (analysis_tools_data_moving_average_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -3273,7 +3273,7 @@ histogram_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	GtkWidget *w;
 
 	data = g_new0 (analysis_tools_data_histogram_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -3463,7 +3463,7 @@ anova_single_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	analysis_tools_data_anova_single_t *data;
 
 	data = g_new0 (analysis_tools_data_anova_single_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -3621,7 +3621,7 @@ anova_two_factor_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->base.warning_dialog);
 
 	data = g_new0 (analysis_tools_data_anova_two_factor_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->input = gnm_expr_entry_parse_as_value
 		(GNM_EXPR_ENTRY (state->base.input_entry),

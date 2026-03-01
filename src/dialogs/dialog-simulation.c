@@ -292,7 +292,7 @@ static void
 simulation_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 			  SimulationState *state)
 {
-	data_analysis_output_t  dao;
+	data_analysis_output_t  *dao;
 	GtkWidget               *w;
 	gchar const		*err;
 	static simulation_t     sim;
@@ -305,7 +305,7 @@ simulation_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	sim.outputs = gnm_expr_entry_parse_as_value
 		(state->input_entry_2, state->sheet);
 
-        parse_output ((GnmGenericToolState *) state, &dao);
+        dao = dao_parse_output ((GnmGenericToolState *) state);
 
 	if (prepare_ranges (&sim)) {
 		err = (gchar *) N_("Invalid variable range was given");
@@ -334,7 +334,7 @@ simulation_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	sim.max_time = gtk_spin_button_get_value (GTK_SPIN_BUTTON (w)) - 1;
 
 	sim.start = g_get_monotonic_time ();
-	err = simulation_tool (GNM_WBC (state->wbcg), &dao, &sim);
+	err = simulation_tool (GNM_WBC (state->wbcg), dao, &sim);
 	sim.end = g_get_monotonic_time ();
 
 	if (err == NULL) {
@@ -350,6 +350,7 @@ simulation_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
  out:
 	value_release (sim.inputs);
 	value_release (sim.outputs);
+	dao_free (dao);
 
 	if (err != NULL)
 		error_in_entry ((GnmGenericToolState *) state,

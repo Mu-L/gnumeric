@@ -110,7 +110,7 @@ principal_components_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->warning_dialog);
 
 	data = g_new0 (analysis_tools_data_generic_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->input_entry), state->sheet);

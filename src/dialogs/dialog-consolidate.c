@@ -288,7 +288,7 @@ cb_consolidate_ok_clicked (GtkWidget *button, ConsolidateState *state)
 	if (state->base.warning_dialog != NULL)
 		gtk_widget_destroy (state->base.warning_dialog);
 
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 	cs = construct_consolidate (state, dao);
 
 	/*

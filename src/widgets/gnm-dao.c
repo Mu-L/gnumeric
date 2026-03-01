@@ -284,22 +284,22 @@ gnm_dao_get_data (GnmDao *gdao, data_analysis_output_t **dao)
 		switch (grp_val) {
 		case 0:
 		default:
-			*dao = dao_init_new_sheet (*dao);
+			*dao = dao_init_new_sheet (NULL);
 			break;
 		case 1:
-			*dao = dao_init (*dao, NewWorkbookOutput);
+			*dao = dao_init (NULL, NewWorkbookOutput);
 			break;
 		case 2:
 			output_range = gnm_expr_entry_parse_as_value
 				(GNM_EXPR_ENTRY (gdao->output_entry),
 				 wb_control_cur_sheet (GNM_WBC
 						       (gdao->wbcg)));
-			*dao = dao_init (*dao, RangeOutput);
+			*dao = dao_init (NULL, RangeOutput);
 			dao_load_from_value (*dao, output_range);
 			value_release (output_range);
 			break;
 		case 3:
-			(*dao) = dao_init ((*dao), InPlaceOutput);
+			*dao = dao_init (NULL, InPlaceOutput);
 			/* It is the callers responsibility to fill the */
 			/* dao with the appropriate range. */
 			break;

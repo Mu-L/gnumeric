@@ -193,7 +193,7 @@ sign_test_two_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	analysis_tool_engine engine;
 
 	data = g_new0 (analysis_tools_data_sign_test_two_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.range_1 = gnm_expr_entry_parse_as_value
 		(GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);
@@ -310,7 +310,7 @@ sign_test_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	analysis_tool_engine engine;
 
 	data = g_new0 (analysis_tools_data_sign_test_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->base.input = gnm_expr_entry_parse_as_list (
 		GNM_EXPR_ENTRY (state->base.input_entry), state->base.sheet);

@@ -76,7 +76,7 @@ chi_squared_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	analysis_tools_data_chi_squared_t *data;
 
 	data = g_new0 (analysis_tools_data_chi_squared_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->input = gnm_expr_entry_parse_as_value
 		(GNM_EXPR_ENTRY (state->base.input_entry),

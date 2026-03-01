@@ -247,7 +247,7 @@ kaplan_meier_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 	analysis_tools_data_kaplan_meier_t  *data;
 
 	data = g_new0 (analysis_tools_data_kaplan_meier_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 
 	data->base.wbc = GNM_WBC (state->base.wbcg);

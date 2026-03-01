@@ -90,7 +90,7 @@ cb_fill_series_ok_clicked (G_GNUC_UNUSED GtkWidget *button,
 	data_analysis_output_t  *dao;
 
 	fs = g_new0 (fill_series_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	/* Read the `Series in' radio buttons. */
 	radio = go_gtk_builder_get_widget (state->base.gui, "series_in_rows");

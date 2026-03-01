@@ -127,7 +127,7 @@ wilcoxon_mann_whitney_tool_ok_clicked_cb (G_GNUC_UNUSED GtkWidget *button,
 		gtk_widget_destroy (state->warning_dialog);
 
 	data = g_new0 (analysis_tools_data_generic_b_t, 1);
-	dao  = parse_output (state, NULL);
+	dao  = dao_parse_output (state);
 
 	data->wbc = GNM_WBC (state->wbcg);
 

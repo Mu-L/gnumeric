@@ -532,7 +532,7 @@ random_tool_ok_clicked_cb (GtkWidget *button, RandomToolState *state)
 	gint err;
 
 	data = g_new0 (tools_data_random_t, 1);
-	dao  = parse_output ((GnmGenericToolState *)state, NULL);
+	dao  = dao_parse_output ((GnmGenericToolState *)state);
 
 	data->wbc = GNM_WBC (state->base.wbcg);
 

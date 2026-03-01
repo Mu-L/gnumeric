@@ -30,7 +30,7 @@
 
 
 void dialog_tool_init_outputs (GnmGenericToolState *state, GCallback sensitivity_cb);
-data_analysis_output_t *parse_output (GnmGenericToolState *state, data_analysis_output_t *dao);
+data_analysis_output_t *dao_parse_output (GnmGenericToolState *state);
 void dialog_tool_preset_to_range (GnmGenericToolState *state);
 
 

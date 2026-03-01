@@ -291,7 +291,7 @@ generate_end_match (const char *endfunc, gboolean force, gboolean negate,
  * gnm_style_cond_get_alternate_expr:
  * @cond: condition
  *
- * Returns: (transfer full) (allow-none): An custom expression that can be
+ * Returns: (transfer full) (nullable): An custom expression that can be
  * used in place of @cond.
  **/
 GnmExprTop const *

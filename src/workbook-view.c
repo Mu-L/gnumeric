@@ -371,7 +371,7 @@ wb_view_menus_update (WorkbookView *wbv)
  * wb_view_selection_desc:
  * @wbv: The view
  * @use_pos:
- * @wbc: (allow-none): A #WorkbookControl
+ * @wbc: (nullable): A #WorkbookControl
  *
  * Load the edit line with the value of the cell in sheet's edit_pos.
  *
@@ -433,7 +433,7 @@ wb_view_selection_desc (WorkbookView *wbv, gboolean use_pos,
 /**
  * wb_view_edit_line_set:
  * @wbv: The view
- * @wbc: (allow-none): A #WorkbookControl
+ * @wbc: (nullable): A #WorkbookControl
  *
  * Load the edit line with the value of the cell in @sheet's edit_pos.
  *
@@ -1305,10 +1305,10 @@ workbook_view_save (WorkbookView *wbv, GOCmdContext *context)
 /**
  * workbook_view_new_from_input:
  * @input: #GsfInput to read data from.
- * @uri: (allow-none): URI
- * @file_opener: (allow-none): #GOFileOpener
- * @io_context: (allow-none): Context to display errors.
- * @encoding: (allow-none): Encoding for @file_opener that understand it
+ * @uri: (nullable): URI
+ * @file_opener: (nullable): #GOFileOpener
+ * @io_context: (nullable): Context to display errors.
+ * @encoding: (nullable): Encoding for @file_opener that understand it
  *
  * Reads @uri file using given file opener @file_opener, or probes for a valid
  * possibility if @file_opener is %NULL.  Reports problems to @io_context.
@@ -1431,9 +1431,9 @@ workbook_view_new_from_input (GsfInput *input,
 /**
  * workbook_view_new_from_uri:
  * @uri: URI for file
- * @file_opener: (allow-none): #GOFileOpener
+ * @file_opener: (nullable): #GOFileOpener
  * @io_context: Context to display errors.
- * @encoding: (allow-none): Encoding for @file_opener that understands it
+ * @encoding: (nullable): Encoding for @file_opener that understands it
  *
  * Reads @uri file using given file opener @file_opener, or probes for a valid
  * possibility if @file_opener is %NULL.  Reports problems to @io_context.

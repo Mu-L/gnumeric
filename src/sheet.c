@@ -3047,7 +3047,7 @@ sheet_cell_get_value (Sheet *sheet, int const col, int const row)
  * sheet_cell_set_text:
  * @cell: A cell.
  * @str: the text to set.
- * @markup: (allow-none): an optional PangoAttrList.
+ * @markup: (nullable): an optional PangoAttrList.
  *
  * Marks the sheet as dirty
  * Clears old spans.
@@ -5578,7 +5578,7 @@ sheet_insdel_colrow (Sheet *sheet, int pos, int count,
  * @sheet: #Sheet
  * @col: At which position we want to insert
  * @count: The number of columns to be inserted
- * @pundo: (out) (transfer full) (allow-none): undo closure
+ * @pundo: (out) (transfer full) (nullable): undo closure
  * @cc: The command context
  **/
 gboolean
@@ -5596,7 +5596,7 @@ sheet_insert_cols (Sheet *sheet, int col, int count,
  * @sheet: The sheet
  * @col:     At which position we want to start deleting columns
  * @count:   The number of columns to be deleted
- * @pundo: (out) (transfer full) (allow-none): undo closure
+ * @pundo: (out) (transfer full) (nullable): undo closure
  * @cc: The command context
  */
 gboolean
@@ -5614,7 +5614,7 @@ sheet_delete_cols (Sheet *sheet, int col, int count,
  * @sheet: The sheet
  * @row: At which position we want to insert
  * @count: The number of rows to be inserted
- * @pundo: (out) (transfer full) (allow-none): undo closure
+ * @pundo: (out) (transfer full) (nullable): undo closure
  * @cc: The command context
  */
 gboolean
@@ -5632,7 +5632,7 @@ sheet_insert_rows (Sheet *sheet, int row, int count,
  * @sheet: The sheet
  * @row: At which position we want to start deleting rows
  * @count: The number of rows to be deleted
- * @pundo: (out) (transfer full) (allow-none): undo closure
+ * @pundo: (out) (transfer full) (nullable): undo closure
  * @cc: The command context
  */
 gboolean

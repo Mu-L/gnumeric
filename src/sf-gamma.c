@@ -1238,7 +1238,7 @@ static const guint32 lanczos_denom[G_N_ELEMENTS(lanczos_num)] = {
 /**
  * gnm_complex_gamma:
  * @z: a complex number
- * @expb: (out) (allow-none): Return location for power-of-base
+ * @expb: (out) (optional): Return location for power-of-base
  *
  * Returns: (transfer full): the Gamma function evaluated at @z.
  */
@@ -1288,7 +1288,7 @@ gnm_complex_gamma (gnm_complex z, int *expb)
 /**
  * gnm_complex_fact:
  * @z: a complex number
- * @expb: (out) (allow-none): Return location for power-of-base.
+ * @expb: (out) (optional): Return location for power-of-base.
  *
  * Returns: (transfer full): the factorial function evaluated at @z.
  */

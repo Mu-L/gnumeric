@@ -685,7 +685,7 @@ value_new_from_string (GnmValueType t, char const *str, GOFormat *sf,
 
 /**
  * value_release:
- * @v: (transfer full) (allow-none): value to dispose of
+ * @v: (transfer full) (nullable): value to dispose of
  *
  * Free the value.
  */

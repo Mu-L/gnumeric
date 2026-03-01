@@ -5234,10 +5234,10 @@ wbc_gtk_markup_changer (WBCGtk *wbcg)
 /******************************************************************************/
 /**
  * wbc_gtk_new:
- * @optional_view: (allow-none): #WorkbookView
- * @optional_wb: (allow-none) (transfer full): #Workbook
- * @optional_screen: (allow-none): #GdkScreen.
- * @optional_geometry: (allow-none): string.
+ * @optional_view: (nullable): #WorkbookView
+ * @optional_wb: (nullable) (transfer full): #Workbook
+ * @optional_screen: (nullable): #GdkScreen.
+ * @optional_geometry: (nullable): string.
  *
  * Returns: (transfer none): the new #WBCGtk.
  **/

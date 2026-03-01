@@ -630,7 +630,7 @@ GSF_CLASS_FULL (SheetObjectGraph, sheet_object_graph,
 
 /**
  * sheet_object_graph_new:
- * @graph: (allow-none): #GogGraph
+ * @graph: (nullable): #GogGraph
  *
  * Adds a reference to @graph and creates a gnumeric sheet object wrapper
  * Returns: (transfer full): the newly allocated #SheetObject.
@@ -667,7 +667,7 @@ sheet_object_graph_get_gog (SheetObject *sog)
 /**
  * sheet_object_graph_set_gog:
  * @sog: #SheetObjectGraph
- * @graph: (allow-none): #GogGraph
+ * @graph: (nullable): #GogGraph
  *
  * If @graph is non-%NULL add a reference to it, otherwise create a new graph.
  * Assign the graph to its SheetObjectGraph wrapper and initialize the

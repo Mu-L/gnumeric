@@ -36,8 +36,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnumeric\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnumeric/issues\n"
-"POT-Creation-Date: 2026-02-02 01:02+0000\n"
-"PO-Revision-Date: 2026-02-08 02:06+0100\n"
+"POT-Creation-Date: 2026-03-01 20:00+0000\n"
+"PO-Revision-Date: 2026-03-01 23:32+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -97,25 +97,29 @@ msgstr ""
 msgid "The Gnumeric Team"
 msgstr "Gnumeric-utvecklarna"
 
-#: ../plugins/applix/applix-read.c:124
+#: ../plugins/applix/applix-read.c:130
 msgid "Parse error while reading Applix file."
 msgstr "Tolkningsfel vid läsning av Applix-fil."
 
-#: ../plugins/applix/applix-read.c:345
+#: ../plugins/applix/applix-read.c:351
 msgid "Missing characters for character encoding"
 msgstr "Tecken saknas för teckenkodning"
 
-#: ../plugins/applix/applix-read.c:349
+#: ../plugins/applix/applix-read.c:355
 #, c-format
 msgid "Invalid characters for encoding '%c%c'"
 msgstr "Ogiltiga tecken för teckenkodningen ”%c%c”"
 
-#: ../plugins/applix/applix-read.c:1234
+#: ../plugins/applix/applix-read.c:368
+msgid "Character encoding error"
+msgstr "Teckenkodningsfel"
+
+#: ../plugins/applix/applix-read.c:1247
 #, c-format
 msgid "Expression did not start with '=' ? '%s'"
 msgstr "Uttrycket började inte med ”=” ? ”%s”"
 
-#: ../plugins/applix/applix-read.c:1245
+#: ../plugins/applix/applix-read.c:1258
 #, c-format
 msgid ""
 "%s!%s : unable to parse '%s'\n"
@@ -137,7 +141,7 @@ msgid "Applix (*.as)"
 msgstr "Applix (*.as)"
 
 #: ../plugins/dif/dif.c:69 ../plugins/excel/ms-excel-read.c:7224
-#: ../plugins/openoffice/openoffice-read.c:14203 ../src/xml-sax-read.c:3645
+#: ../plugins/openoffice/openoffice-read.c:14203 ../src/xml-sax-read.c:3656
 msgid "Reading file..."
 msgstr "Läser fil…"
 
@@ -243,7 +247,7 @@ msgid "Invalid content of ss:data element, received '%s'"
 msgstr "Ogiltigt innehåll i ss:data-element, var ”%s”"
 
 #: ../plugins/excel/excel-xml-read.c:1215
-#: ../plugins/openoffice/openoffice-read.c:14397 ../src/xml-sax-read.c:3662
+#: ../plugins/openoffice/openoffice-read.c:14397 ../src/xml-sax-read.c:3673
 msgid "XML document not well formed!"
 msgstr "XML-dokumentet är inte korrekt utformat!"
 
@@ -252,7 +256,7 @@ msgid "#UNKNOWN!"
 msgstr "#OKÄND!"
 
 #: ../plugins/excel/ms-excel-read.c:1489 ../plugins/excel/ms-excel-read.c:1500
-#: ../plugins/oleo/oleo.c:229 ../plugins/psiconv/psiconv-read.c:542
+#: ../plugins/oleo/oleo.c:229 ../plugins/psiconv/psiconv-read.c:535
 #, c-format
 msgid "Sheet%d"
 msgstr "Blad%d"
@@ -498,7 +502,7 @@ msgstr "Stötte på både attributen ”refreshedDate” och refreshedDateIso”
 #: ../plugins/excel/xlsx-read-pivot.c:1293
 #, c-format
 msgid "Skipping invalid pivot field group for field '%s' because: %s"
-msgstr "Hoppar över ogiltig pivotfältsgrupp för fältet ”%s” eftersom : %s"
+msgstr "Hoppar över ogiltig pivotfältsgrupp för fältet ”%s” eftersom: %s"
 
 #: ../plugins/excel/xlsx-read.c:382
 #, c-format
@@ -2205,15 +2209,15 @@ msgstr "Importerar kalkylblad från Psion 5"
 msgid "Psion (*.psisheet)"
 msgstr "Psion (*.psisheet)"
 
-#: ../plugins/psiconv/psiconv-read.c:650
+#: ../plugins/psiconv/psiconv-read.c:643
 msgid "Error while reading psiconv file."
 msgstr "Fel vid läsning av psiconv-fil."
 
-#: ../plugins/psiconv/psiconv-read.c:661
+#: ../plugins/psiconv/psiconv-read.c:654
 msgid "Error while parsing Psion file."
 msgstr "Fel vid tolkning av Psion-fil."
 
-#: ../plugins/psiconv/psiconv-read.c:669
+#: ../plugins/psiconv/psiconv-read.c:662
 msgid "This Psion file is not a Sheet file."
 msgstr "Den här Psion-filen är inte en Sheet-fil."
 
@@ -2372,17 +2376,17 @@ msgstr "Quattro Pro (*.wb1, *.wb2, *.wb3)"
 msgid "File is most likely corrupted.\n"
 msgstr "Filen är sannolikt skadad.\n"
 
-#: ../plugins/qpro/qpro-read.c:869
+#: ../plugins/qpro/qpro-read.c:871
 #, c-format
 msgid "Invalid zoom %hd %%"
 msgstr "Ogiltig zoom %hd %%"
 
-#: ../plugins/qpro/qpro-read.c:911
+#: ../plugins/qpro/qpro-read.c:913
 #, c-format
 msgid "Invalid record %d of length %hd"
 msgstr "Ogiltig post %d med längd %hd"
 
-#: ../plugins/qpro/qpro-read.c:944
+#: ../plugins/qpro/qpro-read.c:946
 msgid ""
 "Unable to find the PerfectOffice_MAIN stream.  Is this really a Quattro Pro "
 "file?"
@@ -2465,19 +2469,19 @@ msgstr "MultiPlan (SYLK)"
 msgid "Import/Export for MultiPlan (SYLK) files"
 msgstr "Import/export av MultiPlan-filer (SYLK)"
 
-#: ../plugins/sylk/sylk.c:243
+#: ../plugins/sylk/sylk.c:251
 msgid "Multiple values in the same cell"
 msgstr "Flera värden i samma cell"
 
-#: ../plugins/sylk/sylk.c:252 ../plugins/sylk/sylk.c:261
+#: ../plugins/sylk/sylk.c:260 ../plugins/sylk/sylk.c:269
 msgid "Multiple expressions in the same cell"
 msgstr "Flera uttryck i samma cell"
 
-#: ../plugins/sylk/sylk.c:798
+#: ../plugins/sylk/sylk.c:806
 msgid "Missing closing 'E'"
 msgstr "Saknar avslutande ”E”"
 
-#: ../plugins/sylk/sylk.c:821 ../src/dialogs/dialog-goto-cell.c:380
+#: ../plugins/sylk/sylk.c:829 ../src/dialogs/dialog-goto-cell.c:380
 #: ../src/dialogs/dialog-search.c:437 ../src/dialogs/dialog-stf-export.c:594
 #: ../src/dialogs/hf-config.ui.h:16 ../src/dialogs/print.ui.h:53
 #: ../src/dialogs/sheet-compare.ui.h:3 ../src/print-info.c:571
@@ -3966,7 +3970,7 @@ msgstr "Borttagning av raderna %s"
 msgid "Deleting row %s"
 msgstr "Borttagning av rad %s"
 
-#: ../src/commands.c:1584 ../src/commands.c:1585 ../src/sheet.c:5159
+#: ../src/commands.c:1584 ../src/commands.c:1585 ../src/sheet.c:5166
 msgid "Clear"
 msgstr "Töm"
 
@@ -4376,142 +4380,142 @@ msgstr "Uppdatera namn %s"
 msgid "Remove Name %s"
 msgstr "Ta bort namnet %s"
 
-#: ../src/commands.c:6164
+#: ../src/commands.c:6162
 msgid "Change Scope of Name"
 msgstr "Ändra namnomfång"
 
-#: ../src/commands.c:6213
+#: ../src/commands.c:6211
 #, c-format
 msgid "Change Scope of Name %s"
 msgstr "Ändra namnomfång %s"
 
-#: ../src/commands.c:6279
+#: ../src/commands.c:6277
 msgid "Add scenario"
 msgstr "Lägg till scenario"
 
-#: ../src/commands.c:6343
+#: ../src/commands.c:6341
 msgid "Scenario Show"
 msgstr "Scenarievisning"
 
-#: ../src/commands.c:6401
+#: ../src/commands.c:6399
 msgid "Shuffle Data"
 msgstr "Blanda data"
 
 #. FIXME?
-#: ../src/commands.c:6505
+#: ../src/commands.c:6503
 #, c-format
 msgid "Text (%s) to Columns (%s)"
 msgstr "Text (%s) till kolumner (%s)"
 
-#: ../src/commands.c:6663
+#: ../src/commands.c:6661
 #, c-format
 msgid "Goal Seek (%s)"
 msgstr "Målsök (%s)"
 
-#: ../src/commands.c:6829
+#: ../src/commands.c:6827
 #, c-format
 msgid "Tabulating Dependencies"
 msgstr "Tabulerar beroenden"
 
-#: ../src/commands.c:6903
+#: ../src/commands.c:6901
 msgid "Reconfigure Graph"
 msgstr "Konfigurera om graf"
 
-#: ../src/commands.c:6973
+#: ../src/commands.c:6971
 msgid "Reconfigure Object"
 msgstr "Konfigurera om objekt"
 
-#: ../src/commands.c:7186
+#: ../src/commands.c:7184
 msgid "Changing Hyperlink"
 msgstr "Ändra länk"
 
-#: ../src/commands.c:7270
+#: ../src/commands.c:7268
 #, c-format
 msgid "Changing hyperlink of %s"
 msgstr "Byter länk för %s"
 
-#: ../src/commands.c:7355
+#: ../src/commands.c:7353
 msgid "Configure List"
 msgstr "Konfigurera list"
 
-#: ../src/commands.c:7426
+#: ../src/commands.c:7424
 msgid "Set Frame Label"
 msgstr "Ange rametikett"
 
-#: ../src/commands.c:7497
+#: ../src/commands.c:7495
 msgid "Configure Button"
 msgstr "Konfigurera knapp"
 
-#: ../src/commands.c:7578
+#: ../src/commands.c:7576
 msgid "Configure Radio Button"
 msgstr "Konfigurera radioknapp"
 
-#: ../src/commands.c:7654
+#: ../src/commands.c:7652
 msgid "Configure Checkbox"
 msgstr "Konfigurera kryssruta"
 
-#: ../src/commands.c:7761 ../src/sheet-object-widget.c:1773
+#: ../src/commands.c:7759 ../src/sheet-object-widget.c:1773
 msgid "Configure Adjustment"
 msgstr "Konfigurera justering"
 
-#: ../src/commands.c:7792
+#: ../src/commands.c:7790
 msgid "Add Filter"
 msgstr "Lägg till filter"
 
-#: ../src/commands.c:7808 ../src/wbc-gtk.c:1674
+#: ../src/commands.c:7806 ../src/wbc-gtk.c:1674
 #, c-format
 msgid "Auto Filter blocked by %s"
 msgstr "Autofilter blockerat av %s"
 
-#: ../src/commands.c:7813 ../src/commands.c:7840 ../src/commands.c:7849
+#: ../src/commands.c:7811 ../src/commands.c:7838 ../src/commands.c:7847
 msgid "AutoFilter"
 msgstr "Autofilter"
 
-#: ../src/commands.c:7841
+#: ../src/commands.c:7839
 msgid "Requires more than 1 row"
 msgstr "Kräver mer än en rad"
 
-#: ../src/commands.c:7850
+#: ../src/commands.c:7848
 msgid "Unable to create Autofilter"
 msgstr "Det går inte att skapa autofilter"
 
-#: ../src/commands.c:7872
+#: ../src/commands.c:7870
 #, c-format
 msgid "Add Autofilter to %s"
 msgstr "Lägg till autofilter till %s"
 
-#: ../src/commands.c:7873
+#: ../src/commands.c:7871
 #, c-format
 msgid "Extend Autofilter to %s"
 msgstr "Utöka autofilter för %s"
 
-#: ../src/commands.c:7886
+#: ../src/commands.c:7884
 #, c-format
 msgid "Remove Autofilter from %s"
 msgstr "Ta bort autofilter från %s"
 
-#: ../src/commands.c:7916
+#: ../src/commands.c:7914
 #, c-format
 msgid "Change filter condition for %s"
 msgstr "Ändra filtervillkor för %s"
 
-#: ../src/commands.c:7985 ../src/wbc-gtk-actions.c:2395
+#: ../src/commands.c:7983 ../src/wbc-gtk-actions.c:2395
 msgid "Clear All Page Breaks"
 msgstr "Töm alla sidbrytningar"
 
-#: ../src/commands.c:8012 ../src/wbc-gtk.c:1609
+#: ../src/commands.c:8010 ../src/wbc-gtk.c:1609
 msgid "Remove Column Page Break"
 msgstr "Ta bort kolumnsidbrytning"
 
-#: ../src/commands.c:8012 ../src/wbc-gtk.c:1619
+#: ../src/commands.c:8010 ../src/wbc-gtk.c:1619
 msgid "Remove Row Page Break"
 msgstr "Ta bort radsidbrytning"
 
-#: ../src/commands.c:8015 ../src/wbc-gtk.c:1612
+#: ../src/commands.c:8013 ../src/wbc-gtk.c:1612
 msgid "Add Column Page Break"
 msgstr "Lägg till kolumnsidbrytning"
 
-#: ../src/commands.c:8015 ../src/wbc-gtk.c:1622
+#: ../src/commands.c:8013 ../src/wbc-gtk.c:1622
 msgid "Add Row Page Break"
 msgstr "Lägg till radsidbrytning"
 
@@ -5989,27 +5993,27 @@ msgstr "%s (%s)"
 msgid "%s to %s"
 msgstr "%s till %s"
 
-#: ../src/dialogs/dialog-cell-sort.c:754
+#: ../src/dialogs/dialog-cell-sort.c:756
 msgid "no available column"
 msgstr "ingen tillgänglig kolumn"
 
-#: ../src/dialogs/dialog-cell-sort.c:754
+#: ../src/dialogs/dialog-cell-sort.c:756
 msgid "no available row"
 msgstr "ingen tillgänglig rad"
 
-#: ../src/dialogs/dialog-cell-sort.c:1005
+#: ../src/dialogs/dialog-cell-sort.c:1007
 msgid "Header"
 msgstr "Sidhuvud"
 
-#: ../src/dialogs/dialog-cell-sort.c:1011
+#: ../src/dialogs/dialog-cell-sort.c:1013
 msgid "Row/Column"
 msgstr "Rad/Kolumn"
 
-#: ../src/dialogs/dialog-cell-sort.c:1031
+#: ../src/dialogs/dialog-cell-sort.c:1033
 msgid "Case Sensitive"
 msgstr "Gör skillnad på gemener/VERSALER"
 
-#: ../src/dialogs/dialog-cell-sort.c:1051
+#: ../src/dialogs/dialog-cell-sort.c:1053
 msgid "By Value"
 msgstr "Efter värde"
 
@@ -9121,35 +9125,30 @@ msgstr "Markera _inget"
 
 #: ../src/dialogs/dialog-stf-export.ui.h:28
 msgid ""
-"Move the selected sheet to the top of the list of sheets to "
-"be exported first."
+"Move the selected sheet to the top of the list of sheets to be exported "
+"first."
 msgstr ""
 "Flytta det valda bladet till början av listan över blad att exportera, så "
 "det exporteras först."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:29
-msgid ""
-"Raise the selected sheet in the list of sheets to be exported "
-"earlier."
+msgid "Raise the selected sheet in the list of sheets to be exported earlier."
 msgstr ""
 "Flytta upp det valda bladet i listan över blad att exportera, så det "
 "exporteras tidigare."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:30
-msgid ""
-"Lower the selected sheet in the list of sheets to be exported "
-"later."
+msgid "Lower the selected sheet in the list of sheets to be exported later."
 msgstr ""
 "Flytta ner det valda bladet i listan över blad att exportera, så det "
 "exporteras senare."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:31
 msgid ""
-"Move the selected sheet to the end of the list of sheets to "
-"be exported last."
+"Move the selected sheet to the end of the list of sheets to be exported last."
 msgstr ""
-"Flytta det valda bladet till slutet av listan över blad att exportera, för "
-"att det ska exporteras sist."
+"Flytta det valda bladet till slutet av listan över blad att exportera, så "
+"det exporteras sist."
 
 #: ../src/dialogs/dialog-stf-export.ui.h:32
 msgid "Choose export formatting:"
@@ -12105,12 +12104,12 @@ msgstr ""
 msgid "'%s' has a circular reference"
 msgstr "”%s” har en cirkelreferens"
 
-#: ../src/expr-name.c:727 ../src/expr-name.c:968
+#: ../src/expr-name.c:727 ../src/expr-name.c:974
 #, c-format
 msgid "'%s' is already defined in sheet"
 msgstr "”%s” är redan definierad i bladet"
 
-#: ../src/expr-name.c:728 ../src/expr-name.c:969
+#: ../src/expr-name.c:728 ../src/expr-name.c:975
 #, c-format
 msgid "'%s' is already defined in workbook"
 msgstr "”%s” är redan definierad i arbetsboken"
@@ -12628,16 +12627,16 @@ msgstr "Det går inte att aktivera url:en ”%s”"
 msgid "Unable to open '%s'"
 msgstr "Det går inte att öppna ”%s”"
 
-#: ../src/item-bar.c:867
+#: ../src/item-bar.c:857
 msgid "Width:"
 msgstr "Bredd:"
 
-#: ../src/item-bar.c:867
+#: ../src/item-bar.c:857
 msgid "Height:"
 msgstr "Höjd:"
 
 #. xgettext: This is input to ngettext based on the number of pixels.
-#: ../src/item-bar.c:872
+#: ../src/item-bar.c:862
 #, c-format
 msgid "(%d pixel)"
 msgid_plural "(%d pixels)"
@@ -12645,18 +12644,18 @@ msgstr[0] "(%d bildpunkt)"
 msgstr[1] "(%d bildpunkter)"
 
 #. xgettext: This is input to ngettext based on the integer number of points.
-#: ../src/item-bar.c:877
+#: ../src/item-bar.c:867
 #, c-format
 msgid "%d.00 pt"
 msgstr "%d.00 pt"
 
-#: ../src/item-bar.c:877
+#: ../src/item-bar.c:867
 #, c-format
 msgid "%d.00 pts"
 msgstr "%d.00 ptr"
 
 #. xgettext: The number of points here is always a fractional number, ie. not an integer.
-#: ../src/item-bar.c:881
+#: ../src/item-bar.c:871
 #, c-format
 msgid "%.2f pts"
 msgstr "%.2f ptr"
@@ -13528,31 +13527,31 @@ msgstr "Visa rutnät"
 msgid "Control whether the grid is shown."
 msgstr "Bestämmer om rutnätet ska visas."
 
-#: ../src/sheet.c:3786
+#: ../src/sheet.c:3793
 msgid "Target region contains merged cells"
 msgstr "Målregionen innehåller sammanfogade celler"
 
-#: ../src/sheet.c:3852
+#: ../src/sheet.c:3859
 msgid "cannot operate on merged cells"
 msgstr "kan inte operera på sammanfogade celler"
 
-#: ../src/sheet.c:3865
+#: ../src/sheet.c:3872
 msgid "cannot operate on array formulæ"
 msgstr "kan inte operera på vektorformler"
 
-#: ../src/sheet.c:5583
+#: ../src/sheet.c:5590
 msgid "Insert Columns"
 msgstr "Infoga kolumner"
 
-#: ../src/sheet.c:5601
+#: ../src/sheet.c:5608
 msgid "Delete Columns"
 msgstr "Ta bort kolumner"
 
-#: ../src/sheet.c:5619
+#: ../src/sheet.c:5626
 msgid "Insert Rows"
 msgstr "Infoga rader"
 
-#: ../src/sheet.c:5637
+#: ../src/sheet.c:5644
 msgid "Delete Rows"
 msgstr "Ta bort rader"
 
@@ -15486,7 +15485,7 @@ msgstr "#NUM!"
 msgid "#N/A"
 msgstr "#-"
 
-#: ../src/wbc-gtk-actions.c:182 ../src/workbook-view.c:1277
+#: ../src/wbc-gtk-actions.c:182 ../src/workbook-view.c:1278
 msgid "Default file saver is not available."
 msgstr "Standardfilspararen är inte tillgänglig."
 
@@ -18226,26 +18225,26 @@ msgstr "%dR"
 msgid "%dR x %dC"
 msgstr "%dR × %dK"
 
-#: ../src/workbook-view.c:1113
+#: ../src/workbook-view.c:1114
 msgid "An unexplained error happened while saving."
 msgstr "Ett oförklarligt fel inträffade vid sparande."
 
-#: ../src/workbook-view.c:1137
+#: ../src/workbook-view.c:1138
 #, c-format
 msgid "Can't open '%s' for writing: %s"
 msgstr "Kan inte öppna \"%s\" för att skriva: %s"
 
-#: ../src/workbook-view.c:1141
+#: ../src/workbook-view.c:1142
 #, c-format
 msgid "Can't open '%s' for writing"
 msgstr "Kan inte öppna ”%s” för att skriva"
 
-#: ../src/workbook-view.c:1417
+#: ../src/workbook-view.c:1418
 #, c-format
 msgid "Unsupported file format for file \"%s\""
 msgstr "Filformatet stöds inte för filen ”%s”"
 
-#: ../src/workbook-view.c:1473
+#: ../src/workbook-view.c:1474
 #, c-format
 msgid "An unexplained error happened while opening %s"
 msgstr "Ett oförklarat fel inträffade vid öppnande av %s"
@@ -18259,14 +18258,14 @@ msgstr "Blad%d.%s"
 msgid "Graph"
 msgstr "Graf"
 
-#: ../src/workbook.c:1678
+#: ../src/workbook.c:1679
 #, c-format
 msgid "Renaming sheet"
 msgid_plural "Renaming %d sheets"
 msgstr[0] "Byter namn på blad"
 msgstr[1] "Byter namn på %d blad"
 
-#: ../src/workbook.c:1680
+#: ../src/workbook.c:1681
 #, c-format
 msgid "Adding sheet"
 msgid_plural "Adding %d sheets"
@@ -18277,18 +18276,18 @@ msgstr[1] "Lägger till %d blad"
 #. * This is most likely just a sheet inserted, but it just
 #. * might be a compound operation.  Lie.
 #.
-#: ../src/workbook.c:1686
+#: ../src/workbook.c:1687
 #, c-format
 msgid "Inserting sheet"
 msgid_plural "Inserting %d sheets"
 msgstr[0] "Infogar blad"
 msgstr[1] "Infogar %d blad"
 
-#: ../src/workbook.c:1688
+#: ../src/workbook.c:1689
 msgid "Changing sheet tab colors"
 msgstr "Byter färg på flikar"
 
-#: ../src/workbook.c:1690
+#: ../src/workbook.c:1691
 msgid "Changing sheet properties"
 msgstr "Ändrar bladegenskaper"
 
@@ -18296,18 +18295,18 @@ msgstr "Ändrar bladegenskaper"
 #. * This is most likely just a sheet delete, but it just
 #. * might be a compound operation.  Lie.
 #.
-#: ../src/workbook.c:1697
+#: ../src/workbook.c:1698
 #, c-format
 msgid "Deleting sheet"
 msgid_plural "Deleting %d sheets"
 msgstr[0] "Tar bort blad"
 msgstr[1] "Tar bort %d blad"
 
-#: ../src/workbook.c:1699
+#: ../src/workbook.c:1700
 msgid "Changing sheet order"
 msgstr "Ändrar bladordning"
 
-#: ../src/workbook.c:1701
+#: ../src/workbook.c:1702
 msgid "Reorganizing Sheets"
 msgstr "Ändring av ordning av blad"
 
@@ -18324,35 +18323,35 @@ msgstr "attribut för arbetsbokvy är inkomplett"
 msgid "File has inconsistent SheetNameIndex element."
 msgstr "Filen har inte ett konsistent SheetNameIndex-element."
 
-#: ../src/xml-sax-read.c:2461
+#: ../src/xml-sax-read.c:2472
 #, c-format
 msgid "Unknown filter operator \"%s\""
 msgstr "Okänd filteroperator ”%s”"
 
-#: ../src/xml-sax-read.c:2503
+#: ../src/xml-sax-read.c:2514
 msgid "Missing filter type"
 msgstr "Saknar filtertyp"
 
-#: ../src/xml-sax-read.c:2516
+#: ../src/xml-sax-read.c:2527
 msgid "Malformed sheet filter condition"
 msgstr "Felaktigt bladfiltervillkor"
 
-#: ../src/xml-sax-read.c:2530
+#: ../src/xml-sax-read.c:2541
 #, c-format
 msgid "Unknown filter type \"%s\""
 msgstr "Okänd filtertyp: ”%s”"
 
 # "Area" är ett attributnamn
-#: ../src/xml-sax-read.c:2551
+#: ../src/xml-sax-read.c:2562
 msgid "Invalid filter, missing Area"
 msgstr "Ogiltigt filter, saknar Area"
 
-#: ../src/xml-sax-read.c:2616
+#: ../src/xml-sax-read.c:2627
 #, c-format
 msgid "Unsupported object type '%s'"
 msgstr "Objekttypen \"%s\" stöds inte"
 
-#: ../src/xml-sax-read.c:3929 ../src/xml-sax-write.c:1743
+#: ../src/xml-sax-read.c:3940 ../src/xml-sax-write.c:1743
 msgid "Gnumeric XML (*.gnumeric)"
 msgstr "Gnumeric XML (*.gnumeric)"
 

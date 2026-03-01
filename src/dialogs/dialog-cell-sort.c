@@ -280,7 +280,6 @@ build_sort_field_menu (gint start, gint end, gint index, GtkWidget *menu, SortFl
 	char *str;
 	char *str_start;
 	char *str_end;
-	AddSortFieldMenuState *menu_state;
 	gint menu_size;
 
 	menu_size = 1 + end - start;
@@ -321,7 +320,8 @@ build_sort_field_menu (gint start, gint end, gint index, GtkWidget *menu, SortFl
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 			gtk_widget_show (item);
 
-			menu_state = g_new (AddSortFieldMenuState, 1);
+			AddSortFieldMenuState *menu_state =
+				g_new (AddSortFieldMenuState, 1);
 			menu_state->start = i;
 			menu_state->end = this_end;
 			menu_state->index = index;
@@ -329,8 +329,9 @@ build_sort_field_menu (gint start, gint end, gint index, GtkWidget *menu, SortFl
 			menu_state->done_submenu = FALSE;
 			submenu = gtk_menu_new ();
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), submenu);
-			g_signal_connect (item, "activate",
-					  G_CALLBACK (cb_sort_field_menu_activate), menu_state);
+			g_signal_connect_data (item, "activate",
+					       G_CALLBACK (cb_sort_field_menu_activate), menu_state,
+					       (GClosureNotify)g_free, 0);
 		}
 	}  else {
 		for (i = start; i <= end; i++) {
@@ -342,15 +343,17 @@ build_sort_field_menu (gint start, gint end, gint index, GtkWidget *menu, SortFl
 				item = (GtkWidget *) gtk_menu_item_new_with_label (str);
 				gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 				gtk_widget_show (item);
-				menu_state = g_new (AddSortFieldMenuState, 1);
+
+				AddSortFieldMenuState *menu_state =
+					g_new (AddSortFieldMenuState, 1);
 				menu_state->start = i;
 				menu_state->end = i;
 				menu_state->index = index;
 				menu_state->state = state;
 				menu_state->done_submenu = FALSE;
-				g_signal_connect (item, "activate",
-						  G_CALLBACK (cb_sort_field_selection),
-						  menu_state);
+				g_signal_connect_data (item, "activate",
+						       G_CALLBACK (cb_sort_field_selection),
+						       menu_state, (GClosureNotify)g_free, 0);
 			}
 		}
 	}

@@ -169,6 +169,7 @@ dialog_cell_comment (WBCGtk *wbcg, Sheet *sheet, GnmCellPos const *pos)
 		gtk_widget_hide (go_gtk_builder_get_widget (state->gui,
 						       "old-author-label"));
 	}
+	g_free (cell_name);
 	gtk_window_set_title (GTK_WINDOW (state->dialog), title);
 	g_free (title);
 

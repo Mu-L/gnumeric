@@ -2041,7 +2041,7 @@ create_hf_preview_canvas (PrinterSetupState *state, gboolean header)
 		"anchor",	header ? GO_ANCHOR_NORTH : GO_ANCHOR_SOUTH,
 		"text",		"Center",
 		NULL);
-	gostyle = go_styled_object_get_style (GO_STYLED_OBJECT (pi->left));
+	gostyle = go_styled_object_get_style (GO_STYLED_OBJECT (pi->middle));
 	go_style_set_font_desc (gostyle, pango_font_description_copy (font_desc));
 
 	pi->right =  goc_item_new (
@@ -2052,7 +2052,7 @@ create_hf_preview_canvas (PrinterSetupState *state, gboolean header)
 		"anchor",	header ? GO_ANCHOR_NORTH_EAST : GO_ANCHOR_SOUTH_EAST,
 		"text",		"Right",
 		NULL);
-	gostyle = go_styled_object_get_style (GO_STYLED_OBJECT (pi->left));
+	gostyle = go_styled_object_get_style (GO_STYLED_OBJECT (pi->right));
 	go_style_set_font_desc (gostyle, pango_font_description_copy (font_desc));
 
 	pango_font_description_free (font_desc);

@@ -125,7 +125,8 @@ dialog_so_styled_text_widget (DialogSOStyled *state)
 
 	g_object_get (state->so, "markup", &markup, NULL);
 	g_object_set (gtv, "attributes", markup, NULL);
-	/* unref? */
+	if (markup)
+		pango_attr_list_unref (markup);
 
 	g_signal_connect (G_OBJECT (gtv), "changed",
 			  G_CALLBACK (cb_dialog_so_styled_text_widget_changed), state);

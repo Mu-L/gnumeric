@@ -862,6 +862,7 @@ describe_new_style (GtkTextBuffer *description,
 			link = make_link
 				(description, target, tagname,
 				 G_CALLBACK (cb_link_event), NULL);
+			g_free (tagname);
 
 			g_object_set_data_full (G_OBJECT (link),
 						"uri", uri,

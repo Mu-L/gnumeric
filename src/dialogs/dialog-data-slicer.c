@@ -194,6 +194,8 @@ cb_dialog_data_slicer_create_model (DialogDataSlicer *state)
 		}
 	}
 	gtk_tree_view_set_model (state->treeview, smodel);
+	g_object_unref (smodel);
+	g_object_unref (model);
 }
 
 static void

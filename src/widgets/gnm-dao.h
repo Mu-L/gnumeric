@@ -40,6 +40,6 @@ gboolean        gnm_dao_is_ready (GnmDao *gdao);
 gboolean        gnm_dao_is_finite (GnmDao *gdao);
 void            gnm_dao_load_range (GnmDao *gdao, GnmRange const *range);
 void            gnm_dao_focus_output_range (GnmDao *gdao);
-void            gnm_dao_set_inplace (GnmDao *gdao, gchar *inplace_str);
+void            gnm_dao_set_inplace (GnmDao *gdao, const char *inplace_str);
 
 #endif

@@ -141,8 +141,8 @@ tool_set_focus_output_range (G_GNUC_UNUSED GtkWidget *widget,
 			     G_GNUC_UNUSED GdkEventFocus *event,
 			     GnmDao *gdao)
 {
-	    gtk_toggle_button_set_active
-		    (GTK_TOGGLE_BUTTON (gdao->output_range), TRUE);
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (gdao->output_range), TRUE);
 }
 
 static void
@@ -154,7 +154,7 @@ cb_focus_on_entry (GtkWidget *widget, GtkWidget *entry)
 				     (GNM_EXPR_ENTRY (entry))));
 }
 
-static const char *dao_group[] = {
+static const char * const dao_group[] = {
 	"newsheet-button",
 	"newworkbook-button",
 	"outputrange-button",
@@ -249,7 +249,7 @@ gnm_dao_new (WBCGtk *wbcg, gchar *inplace_str)
 }
 
 void
-gnm_dao_set_inplace (GnmDao *gdao, gchar *inplace_str)
+gnm_dao_set_inplace (GnmDao *gdao, const char *inplace_str)
 {
 	g_return_if_fail (gdao != NULL);
 
@@ -264,14 +264,14 @@ gnm_dao_set_inplace (GnmDao *gdao, gchar *inplace_str)
 gboolean
 gnm_dao_get_data (GnmDao *gdao, data_analysis_output_t **dao)
 {
-	gboolean dao_ready  = FALSE;
+	gboolean dao_ready = FALSE;
 	int grp_val;
 
 	g_return_val_if_fail (gdao != NULL, FALSE);
 
 	grp_val = gnm_gui_group_value (gdao->gui, dao_group);
 
-	dao_ready =  ((grp_val  != 2) ||
+	dao_ready =  ((grp_val != 2) ||
 		      gnm_expr_entry_is_cell_ref
 		      (GNM_EXPR_ENTRY (gdao->output_entry),
 		       wb_control_cur_sheet (GNM_WBC (gdao->wbcg)),

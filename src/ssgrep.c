@@ -367,6 +367,7 @@ ssgrep (const char *arg, char const *uri, GOIOContext *ioc, GHashTable *targets,
 			case GNM_SRL_COMMENT: {
 				GnmComment *comment = sheet_get_comment (item->ep.sheet, &item->ep.eval);
 				txt = g_strdup (cell_comment_text_get (comment));
+				g_object_unref (comment);
 				locus_type = _("comment");
 				break;
 			}

@@ -347,17 +347,20 @@ paradox_file_save (GOFileSaver const *fs, GOIOContext *io_context,
 			tmp = strchr (fieldstr, ',');
 			if (NULL == tmp) {
 				g_warning (_("Field specification must be a comma separated value (Name,Type,Size,Prec)."));
+				g_free (fieldstr);
 				PX_delete (pxdoc);
 				return;
 			}
 			len = tmp-fieldstr;
 			if (NULL == (pxf[i].px_fname = pxdoc->malloc (pxdoc, len+1, _("Allocate memory for column name.")))) {
 				g_warning (_("Could not allocate memory for %d. field name."), i);
+				g_free (fieldstr);
 				PX_delete (pxdoc);
 				return;
 			}
 			strncpy (pxf[i].px_fname, fieldstr, len);
 			pxf[i].px_fname[len] = '\0';
+			g_free (fieldstr);
 
 			/* Get the field Type */
 			fieldstr = tmp+1;
@@ -578,6 +581,7 @@ paradox_file_save (GOFileSaver const *fs, GOIOContext *io_context,
 					PX_put_data_bcd (pxdoc, &data[offset], pxf[i].px_fdc, fieldstr);
 					break;
 				}
+				g_free (fieldstr);
 			}
 			offset += pxf[i].px_flen;
 			i++;

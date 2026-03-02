@@ -6727,7 +6727,7 @@ sheet_cell_queue_respan (GnmCell *cell)
  * If there is a cell comment at @pos in @sheet return it.
  *
  * Caller does get a reference to the object if it exists.
- * Returns: (transfer full): the comment or %NULL.
+ * Returns: (transfer full) (nullable): the comment
  **/
 GnmComment *
 sheet_get_comment (Sheet const *sheet, GnmCellPos const *pos)

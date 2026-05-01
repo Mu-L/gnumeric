@@ -1645,7 +1645,6 @@ gnm_expr_eval (GnmExpr const *expr, GnmEvalPos const *pos,
 			int argc = expr->set.argc;
 
 			res = value_new_array_non_init (1, expr->set.argc);
-			res->v_array.vals[0] = g_new (GnmValue *, expr->set.argc);
 			for (i = 0; i < argc; i++)
 				res->v_array.vals[0][i] = gnm_expr_eval (
 					expr->set.argv[i], pos,

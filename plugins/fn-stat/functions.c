@@ -3551,7 +3551,6 @@ gnumeric_frequency (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 	}
 
 	res = value_new_array_non_init (1, nbins + 1);
-	res->v_array.vals[0] = g_new (GnmValue *, nbins + 1);
 	for (i = 0; i < nbins + 1; i++)
 		res->v_array.vals[0][i] = value_new_float (counts[i]);
 	g_free (counts);
@@ -3602,7 +3601,6 @@ gnumeric_leverage (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 		res = value_new_array_non_init (x_cols, x_rows);
 		for (c = 0; c < x_cols; c++) {
-			res->v_array.vals[c] = g_new (GnmValue *, x_rows);
 			for (r = 0; r < x_rows; r++)
 				res->v_array.vals[c][r] =
 					value_new_float (x[r]);

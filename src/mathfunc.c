@@ -5487,7 +5487,6 @@ gnm_matrix_to_value (GnmMatrix const *m)
 	int c, r;
 
 	for (c = 0; c < m->cols; c++) {
-	        res->v_array.vals[c] = g_new (GnmValue *, m->rows);
 	        for (r = 0; r < m->rows; r++)
 		        res->v_array.vals[c][r] = value_new_float (m->data[r][c]);
 	}

@@ -512,8 +512,6 @@ gnumeric_interpolation (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 		res = value_new_array_non_init (1 , n2);
 		i = 0;
 
-		res->v_array.vals[0] = g_new (GnmValue *, n2);
-
 		fres = interpproc (vals0, vals1, n0, vals2, n);
 		missing = missing2;
 		if (fres) {
@@ -790,7 +788,6 @@ no_absc:
 	nb /= 2;
 	if (out && nb > 0) {
 		res = value_new_array_non_init (1 , nb);
-		res->v_array.vals[0] = g_new (GnmValue *, nb);
 		for (i = 0; i < nb; i++)
 			res->v_array.vals[0][i] =
 				value_new_float (gnm_sqrt (

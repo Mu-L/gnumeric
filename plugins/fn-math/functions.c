@@ -3302,7 +3302,6 @@ gnumeric_linsolve (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 		res = value_new_array_non_init (B->cols, B->rows);
 		for (c = 0; c < B->cols; c++) {
-			res->v_array.vals[c] = g_new (GnmValue *, B->rows);
 			for (r = 0; r < B->rows; r++)
 				res->v_array.vals[c][r] =
 					value_new_float (B->data[r][c]);
@@ -3591,7 +3590,6 @@ gnumeric_eigen (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 	res = value_new_array_non_init (A->cols, A->rows + 1);
 	for (c = 0; c < A->cols; ++c) {
-		res->v_array.vals[c] = g_new (GnmValue *, A->rows + 1);
 		res->v_array.vals[c][0] = value_new_float (eigenvalues[ev_sort[c].index]);
 		for (r = 0; r < A->rows; ++r) {
 			gnm_float tmp = EIG->data[r][ev_sort[c].index];

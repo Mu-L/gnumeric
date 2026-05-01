@@ -556,11 +556,15 @@ GnmValue *
 value_new_array_non_init (guint cols, guint rows)
 {
 	GnmValueArray *v = CHUNK_ALLOC (GnmValueArray, value_array_pool);
+	guint i;
+
 	*((GnmValueType *)&(v->type)) = VALUE_ARRAY;
 	v->fmt = NULL;
 	v->x = cols;
 	v->y = rows;
 	v->vals = g_new (GnmValue **, cols);
+	for (i = 0; i < cols; i++)
+		v->vals[i] = g_new (GnmValue *, rows);
 	return (GnmValue *)v;
 }
 
@@ -579,7 +583,6 @@ value_new_array (guint cols, guint rows)
 	GnmValueArray *v = (GnmValueArray *)value_new_array_non_init (cols, rows);
 
 	for (x = 0; x < cols; x++) {
-		v->vals[x] = g_new (GnmValue *, rows);
 		for (y = 0; y < rows; y++)
 			v->vals[x][y] = value_new_int (0);
 	}
@@ -601,7 +604,6 @@ value_new_array_empty (guint cols, guint rows)
 	GnmValueArray *v = (GnmValueArray *)value_new_array_non_init (cols, rows);
 
 	for (x = 0; x < cols; x++) {
-		v->vals[x] = g_new (GnmValue *, rows);
 		for (y = 0; y < rows; y++)
 			v->vals[x][y] = value_new_empty ();
 	}
@@ -830,7 +832,6 @@ value_dup (GnmValue const *src)
 			src->v_array.x, src->v_array.y);
 
 		for (x = 0; x < array->x; x++) {
-			array->vals[x] = g_new (GnmValue *, array->y);
 			for (y = 0; y < array->y; y++)
 				array->vals[x][y] = value_dup (src->v_array.vals[x][y]);
 		}

@@ -1812,6 +1812,25 @@ gnumeric_critbinom (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 /***************************************************************************/
 
+static GnmFuncHelp const help_phi[] = {
+	{ GNM_FUNC_HELP_NAME, F_("PHI:standard normal distribution density")},
+	{ GNM_FUNC_HELP_ARG, F_("x:observation")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("PHI(@{x}) returns the density of the standard normal distribution at @{x}.")},
+	{ GNM_FUNC_HELP_EXCEL, F_("This function is Excel compatible.") },
+	{ GNM_FUNC_HELP_EXAMPLES, "=PHI(0.75)" },
+	{ GNM_FUNC_HELP_SEEALSO, "NORMDIST,NORMSDIST"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static GnmValue *
+gnumeric_phi (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	gnm_float x = value_get_as_float (argv[0]);
+	return value_new_float (dnorm (x, 0, 1, FALSE));
+}
+
+/***************************************************************************/
+
 static GnmFuncHelp const help_permut[] = {
 	{ GNM_FUNC_HELP_NAME, F_("PERMUT:number of @{k}-permutations of a @{n}-set")},
 	{ GNM_FUNC_HELP_ARG, F_("n:size of the base set")},
@@ -5605,6 +5624,10 @@ GnmFuncDescriptor const stat_functions[] = {
 	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_NO_TESTSUITE},
 	{ "permut",       "ff",
 	  help_permut, gnumeric_permut, NULL,
+	  GNM_FUNC_SIMPLE + GNM_FUNC_AUTO_UNITLESS,
+	  GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+	{ "phi",      "f",   help_phi,
+	  gnumeric_phi, NULL,
 	  GNM_FUNC_SIMPLE + GNM_FUNC_AUTO_UNITLESS,
 	  GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
 	{ "poisson",      "ffb",

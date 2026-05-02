@@ -1980,6 +1980,51 @@ gnumeric_pi (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 /***************************************************************************/
 
+static GnmFuncHelp const help_percentof[] = {
+	{ GNM_FUNC_HELP_NAME, F_("PERCENTOF:percentage of a subset relative to total")},
+	{ GNM_FUNC_HELP_ARG, F_("subset:subset of data")},
+	{ GNM_FUNC_HELP_ARG, F_("data_all:the complete dataset")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("PERCENTOF returns the sum of @{subset} divided by the sum of @{data_all}.")},
+	{ GNM_FUNC_HELP_NOTE, F_("If the sum of @{data_all} is zero, PERCENTOF returns #DIV/0!")},
+	{ GNM_FUNC_HELP_EXCEL, F_("This function is Excel compatible.") },
+	{ GNM_FUNC_HELP_EXAMPLES, "=PERCENTOF(B2:B3, B2:B10)" },
+	{ GNM_FUNC_HELP_SEEALSO, "SUM"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static GnmValue *
+gnumeric_percentof (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	gnm_float sum_subset = 0, sum_all = 0;
+	int n;
+	GnmValue *error = NULL;
+	gnm_float *vals;
+	CollectFlags flags = COLLECT_IGNORE_STRINGS | COLLECT_IGNORE_BOOLS | COLLECT_IGNORE_BLANKS;
+
+	/* Sum the subset */
+	vals = collect_floats_value (argv[0], ei->pos, flags, &n, &error);
+	if (error) return error;
+	if (vals) {
+		gnm_range_sum (vals, n, &sum_subset);
+		g_free (vals);
+	}
+
+	/* Sum the total dataset */
+	vals = collect_floats_value (argv[1], ei->pos, flags, &n, &error);
+	if (error) return error;
+	if (vals) {
+		gnm_range_sum (vals, n, &sum_all);
+		g_free (vals);
+	}
+
+	if (sum_all == 0)
+		return value_new_error_DIV0 (ei->pos);
+
+	return value_new_float (sum_subset / sum_all);
+}
+
+/***************************************************************************/
+
 static GnmFuncHelp const help_trunc[] = {
 	{ GNM_FUNC_HELP_NAME, F_("TRUNC:@{x} truncated to @{d} digits")},
 	{ GNM_FUNC_HELP_ARG, F_("x:number")},
@@ -3914,6 +3959,8 @@ GnmFuncDescriptor const math_functions[] = {
 	  gnumeric_trunc, NULL,
 	  GNM_FUNC_SIMPLE + GNM_FUNC_AUTO_FIRST,
 	  GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+	{ "percentof", "AA", help_percentof, gnumeric_percentof, NULL,
+	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
 	{ "pi",      "", help_pi,
 	  gnumeric_pi, NULL,
 	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_EXHAUSTIVE },

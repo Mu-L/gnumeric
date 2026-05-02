@@ -63,6 +63,9 @@ TESTS =	t1000-statfuns.pl			\
 	t1109-unique.pl				\
 	t1110-xlookup.pl			\
 	t1111-switch.pl				\
+	t1112-regextest.pl			\
+	t1113-regexextract.pl			\
+	t1114-regexreplace.pl			\
 	t1800-operators.pl			\
 	t1900-array.pl				\
 	t1901-regress.pl			\

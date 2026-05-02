@@ -4,6 +4,10 @@ Morten:
 	* Test improvements
 	* New function PHI.
 	* New function GAUSS.
+	* New function PERCENTOF.
+	* New function REGEXTEST.
+	* New function REGEXEXTRACT.
+	* New function REGEXREPLACE.
 
 --------------------------------------------------------------------------
 Gnumeric 1.12.61

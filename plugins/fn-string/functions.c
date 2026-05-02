@@ -1006,6 +1006,271 @@ gnumeric_proper (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 /***************************************************************************/
 
+static GnmFuncHelp const help_regexextract[] = {
+	{ GNM_FUNC_HELP_NAME, F_("REGEXEXTRACT:extract text using a regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("text:string")},
+	{ GNM_FUNC_HELP_ARG, F_("pattern:regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("return_mode:0 for first match (default), 1 for all matches, 2 for capturing groups")},
+	{ GNM_FUNC_HELP_ARG, F_("case_insensitive:if TRUE, perform a case-insensitive match; defaults to FALSE")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("REGEXEXTRACT returns substrings from @{text} based on @{pattern}.\n"
+					"If @{return_mode} is 0, it returns the first match.\n"
+					"If @{return_mode} is 1, it returns all matches as a vertical array.\n"
+					"If @{return_mode} is 2, it returns capturing groups from the first match as a horizontal array.")},
+	{ GNM_FUNC_HELP_EXAMPLES, "=REGEXEXTRACT(\"ID: 12345\", \"[0-9]+\")" },
+	{ GNM_FUNC_HELP_SEEALSO, "REGEXTEST,REGEXREPLACE,SEARCH"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static GnmValue *
+gnumeric_regexextract (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	char const *text = value_peek_string (argv[0]);
+	char const *pattern = value_peek_string (argv[1]);
+	int return_mode = argv[2] ? value_get_as_int (argv[2]) : 0;
+	gboolean case_insensitive = argv[3] ? value_get_as_checked_bool (argv[3]) : FALSE;
+	GRegex *regex;
+	GMatchInfo *match_info;
+	GError *err = NULL;
+	GnmValue *res = NULL;
+	GRegexCompileFlags cflags = G_REGEX_OPTIMIZE;
+
+	if (case_insensitive)
+		cflags |= G_REGEX_CASELESS;
+
+	regex = g_regex_new (pattern, cflags, 0, &err);
+	if (!regex) {
+		g_error_free (err);
+		return value_new_error_VALUE (ei->pos);
+	}
+
+	if (return_mode == 0) {
+		if (g_regex_match (regex, text, 0, &match_info)) {
+			res = value_new_string_nocopy (g_match_info_fetch (match_info, 0));
+		}
+		g_match_info_free (match_info);
+	} else if (return_mode == 1) {
+		GSList *matches = NULL;
+		int pos = 0;
+		int text_len = strlen (text);
+
+		while (pos <= text_len) {
+			if (g_regex_match_full (regex, text, text_len, pos, 0, &match_info, NULL)) {
+				char *m = g_match_info_fetch (match_info, 0);
+				int start, end;
+				g_match_info_fetch_pos (match_info, 0, &start, &end);
+
+				if (start == end) {
+					/* Empty match. Append it, then try for a non-empty match at same position. */
+					matches = g_slist_prepend (matches, m);
+					g_match_info_free (match_info);
+					if (g_regex_match_full (regex, text, text_len, pos, G_REGEX_MATCH_NOTEMPTY, &match_info, NULL)) {
+						m = g_match_info_fetch (match_info, 0);
+						g_match_info_fetch_pos (match_info, 0, &start, &end);
+						matches = g_slist_prepend (matches, m);
+						pos = end;
+					} else {
+						pos++;
+					}
+				} else {
+					matches = g_slist_prepend (matches, m);
+					pos = end;
+				}
+				g_match_info_free (match_info);
+			} else {
+				break;
+			}
+		}
+
+		if (matches) {
+			int n = g_slist_length (matches);
+			int i = 0;
+			GSList *l;
+			res = value_new_array_non_init (1, n);
+			matches = g_slist_reverse (matches);
+			for (l = matches; l; l = l->next)
+				res->v_array.vals[0][i++] = value_new_string_nocopy (l->data);
+			g_slist_free (matches);
+		}
+	} else if (return_mode == 2) {
+		if (g_regex_match (regex, text, 0, &match_info)) {
+			int n_groups = g_regex_get_capture_count (regex);
+			int i, count = 0;
+			for (i = 1; i <= n_groups; i++) {
+				char *group = g_match_info_fetch (match_info, i);
+				if (group) {
+					count++;
+					g_free (group);
+				}
+			}
+			if (count > 0) {
+				res = value_new_array_non_init (count, 1);
+				int j = 0;
+				for (i = 1; i <= n_groups; i++) {
+					char *group = g_match_info_fetch (match_info, i);
+					if (group) {
+						res->v_array.vals[j++][0] = value_new_string_nocopy (group);
+					}
+				}
+			}
+		}
+		g_match_info_free (match_info);
+	}
+
+	g_regex_unref (regex);
+	return res ? res : value_new_error_NA (ei->pos);
+}
+
+/***************************************************************************/
+
+static GnmFuncHelp const help_regexreplace[] = {
+	{ GNM_FUNC_HELP_NAME, F_("REGEXREPLACE:replace text matching a regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("text:string")},
+	{ GNM_FUNC_HELP_ARG, F_("pattern:regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("replacement:new text")},
+	{ GNM_FUNC_HELP_ARG, F_("occurrence:0 for all instances (default), n for the n-th instance")},
+	{ GNM_FUNC_HELP_ARG, F_("case_insensitive:if TRUE, perform a case-insensitive match; defaults to FALSE")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("REGEXREPLACE replaces occurrences of @{pattern} in @{text} with @{replacement}.\n"
+					"The @{replacement} string can include backreferences like \\1, \\2 or $1, $2.")},
+	{ GNM_FUNC_HELP_EXAMPLES, "=REGEXREPLACE(\"ID: 12345\", \"[0-9]+\", \"*****\")" },
+	{ GNM_FUNC_HELP_SEEALSO, "REGEXTEST,REGEXEXTRACT,SUBSTITUTE,REPLACE"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static char *
+translate_replacement (char const *replacement)
+{
+	GString *s = g_string_new (NULL);
+	char const *p = replacement;
+
+	while (*p) {
+		if (*p == '$' && g_ascii_isdigit (p[1])) {
+			g_string_append_c (s, '\\');
+			p++;
+		} else if (*p == '\\' && g_ascii_isdigit (p[1])) {
+			/* Already GLib style, keep it */
+			g_string_append_c (s, '\\');
+			p++;
+		} else {
+			g_string_append_c (s, *p);
+			p++;
+		}
+	}
+	return g_string_free (s, FALSE);
+}
+
+static GnmValue *
+gnumeric_regexreplace (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	char const *text = value_peek_string (argv[0]);
+	char const *pattern = value_peek_string (argv[1]);
+	char const *replacement_raw = value_peek_string (argv[2]);
+	char *replacement = translate_replacement (replacement_raw);
+	int occurrence = argv[3] ? value_get_as_int (argv[3]) : 0;
+	gboolean case_insensitive = argv[4] ? value_get_as_checked_bool (argv[4]) : FALSE;
+	GRegex *regex;
+	GError *err = NULL;
+	char *res_str = NULL;
+	GRegexCompileFlags cflags = G_REGEX_OPTIMIZE;
+
+	if (case_insensitive)
+		cflags |= G_REGEX_CASELESS;
+
+	regex = g_regex_new (pattern, cflags, 0, &err);
+	if (!regex) {
+		g_error_free (err);
+		g_free (replacement);
+		return value_new_error_VALUE (ei->pos);
+	}
+
+	if (occurrence == 0) {
+		/* Global replace */
+		res_str = g_regex_replace (regex, text, -1, 0, replacement, 0, &err);
+		if (err) {
+			g_error_free (err);
+			g_regex_unref (regex);
+			g_free (replacement);
+			return value_new_error_VALUE (ei->pos);
+		}
+	} else {
+		/* Replace specific occurrence (positive or negative) */
+		GMatchInfo *match_info;
+		GPtrArray *matches = g_ptr_array_new_with_free_func (NULL);
+		g_regex_match (regex, text, 0, &match_info);
+		while (g_match_info_matches (match_info)) {
+			int start, end;
+			g_match_info_fetch_pos (match_info, 0, &start, &end);
+			g_ptr_array_add (matches, GINT_TO_POINTER (start));
+			g_ptr_array_add (matches, GINT_TO_POINTER (end));
+			g_match_info_next (match_info, NULL);
+		}
+		int n = matches->len / 2;
+		int target = -1;
+		if (occurrence > 0 && occurrence <= n) target = occurrence - 1;
+		else if (occurrence < 0 && -occurrence <= n) target = n + occurrence;
+
+		if (target != -1) {
+			int start = GPOINTER_TO_INT (g_ptr_array_index (matches, target * 2));
+			int end = GPOINTER_TO_INT (g_ptr_array_index (matches, target * 2 + 1));
+
+			GString *s = g_string_new_len (text, start);
+			/* Replacement for this instance only */
+			char *rep = g_regex_replace (regex, text + start, end - start, 0, replacement, 0, NULL);
+			g_string_append (s, rep);
+			g_string_append (s, text + end);
+			res_str = g_string_free (s, FALSE);
+			g_free (rep);
+		} else {
+			res_str = g_strdup (text);
+		}
+		g_ptr_array_free (matches, TRUE);
+		g_match_info_free (match_info);
+	}
+
+	g_regex_unref (regex);
+	g_free (replacement);
+	return value_new_string_nocopy (res_str);
+}
+/***************************************************************************/
+
+static GnmFuncHelp const help_regextest[] = {
+	{ GNM_FUNC_HELP_NAME, F_("REGEXTEST:test if @{text} matches a regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("text:string")},
+	{ GNM_FUNC_HELP_ARG, F_("pattern:regular expression")},
+	{ GNM_FUNC_HELP_ARG, F_("case_insensitive:if TRUE, perform a case-insensitive match; defaults to FALSE")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("REGEXTEST checks if @{text} matches the regular expression @{pattern}.")},
+	{ GNM_FUNC_HELP_EXAMPLES, "=REGEXTEST(\"Gnumeric123\", \"^[A-Za-z]+[0-9]+$\")" },
+	{ GNM_FUNC_HELP_SEEALSO, "SEARCH,SUBSTITUTE"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static GnmValue *
+gnumeric_regextest (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	char const *text = value_peek_string (argv[0]);
+	char const *pattern = value_peek_string (argv[1]);
+	gboolean case_insensitive = argv[2] ? value_get_as_checked_bool (argv[2]) : FALSE;
+	GRegex *regex;
+	GError *err = NULL;
+	gboolean res;
+	GRegexCompileFlags cflags = G_REGEX_OPTIMIZE;
+
+	if (case_insensitive)
+		cflags |= G_REGEX_CASELESS;
+
+	regex = g_regex_new (pattern, cflags, 0, &err);
+	if (!regex) {
+		g_error_free (err);
+		return value_new_error_VALUE (ei->pos);
+	}
+
+	res = g_regex_match (regex, text, 0, NULL);
+	g_regex_unref (regex);
+
+	return value_new_bool (res);
+}
+
+/***************************************************************************/
+
 static GnmFuncHelp const help_replace[] = {
         { GNM_FUNC_HELP_NAME, F_("REPLACE:string @{old} with @{num} characters "
 				 "starting at @{start} replaced by @{new}")},
@@ -1674,12 +1939,11 @@ gnumeric_textsplit (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 		return value_new_empty ();
 	}
 
-	GnmValue *res = value_new_array (max_cols, all_rows->len);
+	GnmValue *res = value_new_array_non_init (max_cols, all_rows->len);
 	for (i = 0; i < (int)all_rows->len; i++) {
 		GPtrArray *r = g_ptr_array_index (all_rows, i);
 		int j;
 		for (j = 0; j < max_cols; j++) {
-			value_release (res->v_array.vals[j][i]);
 			if (j < (int)r->len) {
 				res->v_array.vals[j][i] = value_dup (g_ptr_array_index (r, j));
 			} else {
@@ -2395,6 +2659,15 @@ GnmFuncDescriptor const string_functions[] = {
 	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_UNIQUE_TO_GNUMERIC, GNM_FUNC_TEST_STATUS_BASIC },
         { "proper",     "S",                         help_proper,
 	  gnumeric_proper, NULL,
+	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+        { "regexreplace", "SSS|fb",     help_regexreplace,
+	  gnumeric_regexreplace, NULL,
+	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+        { "regexextract", "SS|fb",      help_regexextract,
+	  gnumeric_regexextract, NULL,
+	  GNM_FUNC_RETURNS_NON_SCALAR, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+        { "regextest",  "SS|b",         help_regextest,
+	  gnumeric_regextest, NULL,
 	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
         { "replace",    "SffS",         help_replace,
 	  gnumeric_replace, NULL,

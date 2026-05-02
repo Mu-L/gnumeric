@@ -47,6 +47,7 @@
 				<function name="ftest"/>
 				<function name="gammadist"/>
 				<function name="gammainv"/>
+				<function name="gauss"/>
 				<function name="geomdist"/>
 				<function name="geomean"/>
 				<function name="growth"/>

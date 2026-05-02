@@ -453,6 +453,26 @@ gnumeric_normsdist (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 
 /***************************************************************************/
 
+static GnmFuncHelp const help_gauss[] = {
+	{ GNM_FUNC_HELP_NAME, F_("GAUSS:standard normal distribution area")},
+	{ GNM_FUNC_HELP_ARG, F_("x:observation")},
+	{ GNM_FUNC_HELP_DESCRIPTION, F_("GAUSS(@{x}) returns the probability that a member of a standard normal population will fall between the mean and @{x} standard deviations from the mean.")},
+	{ GNM_FUNC_HELP_NOTE, F_("GAUSS(@{x}) is equivalent to NORMSDIST(@{x}) - 0.5.")},
+	{ GNM_FUNC_HELP_EXCEL, F_("This function is Excel compatible.") },
+	{ GNM_FUNC_HELP_EXAMPLES, "=GAUSS(2)" },
+	{ GNM_FUNC_HELP_SEEALSO, "NORMDIST,NORMSDIST"},
+	{ GNM_FUNC_HELP_END }
+};
+
+static GnmValue *
+gnumeric_gauss (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
+{
+	gnm_float x = value_get_as_float (argv[0]);
+	return value_new_float (gnm_erf (x / M_SQRT2gnum) / 2);
+}
+
+/***************************************************************************/
+
 static GnmFuncHelp const help_snorm_dist_range[] = {
 	{ GNM_FUNC_HELP_NAME, F_("SNORM.DIST.RANGE:probability of the standard normal distribution over an interval") },
 	{ GNM_FUNC_HELP_ARG, F_("x1:start of the interval") },
@@ -5512,6 +5532,10 @@ GnmFuncDescriptor const stat_functions[] = {
 	{ "gammainv",     "fff",
 	  help_gammainv, gnumeric_gammainv, NULL,
 	  GNM_FUNC_SIMPLE, GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
+	{ "gauss",      "f",   help_gauss,
+	  gnumeric_gauss, NULL,
+	  GNM_FUNC_SIMPLE + GNM_FUNC_AUTO_UNITLESS,
+	  GNM_FUNC_IMPL_STATUS_COMPLETE, GNM_FUNC_TEST_STATUS_BASIC },
 	{ "geomean", NULL,
 	  help_geomean, NULL, gnumeric_geomean,
 	  GNM_FUNC_SIMPLE + GNM_FUNC_AUTO_FIRST,

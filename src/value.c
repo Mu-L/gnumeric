@@ -51,6 +51,8 @@ static int value_allocations = 0;
 #endif
 
 
+// Errors corresponding to GnmStdError
+// Note, that #N/A and #GETTING_DATA lack "!".  For reasons, obviously
 static struct {
 	char const *C_name;
 	char const *locale_name;
@@ -63,6 +65,8 @@ static struct {
 	{ N_("#NAME?"), NULL, NULL },
 	{ N_("#NUM!"), NULL, NULL },
 	{ N_("#N/A"), NULL, NULL },
+	{ N_("#GETTING_DATA"), NULL, NULL },
+	{ N_("#SPILL!"), NULL, NULL },
 	{ N_("#UNKNOWN!"), NULL, NULL }
 };
 
@@ -269,6 +273,19 @@ GnmValue *
 value_new_error_NA (GnmEvalPos const *pos)
 {
 	return value_new_error_str (pos, standard_errors[GNM_ERROR_NA].locale_name_str);
+}
+
+/**
+ * value_new_error_SPILL:
+ * @pos: evaluation position
+ *
+ * Returns: (transfer full): a new \#SPILL! error value.  This is used for
+ * (still unsupported) dynamic arrays.
+ */
+GnmValue *
+value_new_error_SPILL (GnmEvalPos const *pos)
+{
+	return value_new_error_str (pos, standard_errors[GNM_ERROR_SPILL].locale_name_str);
 }
 
 /**

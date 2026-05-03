@@ -112,6 +112,7 @@ GnmValue *value_new_error_REF        (GnmEvalPos const *pos);
 GnmValue *value_new_error_NAME       (GnmEvalPos const *pos);
 GnmValue *value_new_error_NUM        (GnmEvalPos const *pos);
 GnmValue *value_new_error_NA         (GnmEvalPos const *pos);
+GnmValue *value_new_error_SPILL      (GnmEvalPos const *pos);
 GnmValue *value_new_string           (char const *str);
 GnmValue *value_new_string_nocopy    (char *str);
 GnmValue *value_new_string_str       (GOString *str);

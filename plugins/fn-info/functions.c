@@ -687,12 +687,15 @@ static GnmFuncHelp const help_error_type[] = {
         { GNM_FUNC_HELP_ARG, F_("error:an error")},
         { GNM_FUNC_HELP_DESCRIPTION, F_("ERROR.TYPE returns an error number corresponding to the given "
 					"error value.  The error numbers for error values are:\n\n"
-					"\t#DIV/0!  \t\t2\n"
-					"\t#VALUE!  \t3\n"
-					"\t#REF!    \t\t4\n"
-					"\t#NAME?   \t5\n"
-					"\t#NUM!    \t6\n"
-					"\t#N/A     \t\t7")},
+					"\t#NULL!    \t1\n"
+					"\t#DIV/0!   \t2\n"
+					"\t#VALUE!   \t3\n"
+					"\t#REF!     \t4\n"
+					"\t#NAME?    \t5\n"
+					"\t#NUM!     \t6\n"
+					"\t#N/A      \t7\n"
+					"\t#GETTING_DATA\t8\n"
+					"\t#SPILL!   \t9")},
 	{ GNM_FUNC_HELP_EXCEL, F_("This function is Excel compatible.") },
         { GNM_FUNC_HELP_EXAMPLES, "=ERROR.TYPE(NA())" },
         { GNM_FUNC_HELP_EXAMPLES, "=ERROR.TYPE(ERROR(\"#X\"))" },
@@ -711,6 +714,8 @@ gnumeric_error_type (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 	case GNM_ERROR_NAME: return value_new_int (5);
 	case GNM_ERROR_NUM: return value_new_int (6);
 	case GNM_ERROR_NA: return value_new_int (7);
+	case GNM_ERROR_GETTING_DATA: return value_new_int (8);
+	case GNM_ERROR_SPILL: return value_new_int (9);
 	default:
 		return value_new_error_NA (ei->pos);
 	}

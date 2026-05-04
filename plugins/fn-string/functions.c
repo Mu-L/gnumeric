@@ -1062,12 +1062,12 @@ gnumeric_regexextract_mode_1 (GRegex *regex, char const *text)
 
 	if (matches) {
 		int n = g_slist_length (matches);
-		int i = 0;
+		int i = n;
 		GSList *l;
 		res = value_new_array_non_init (1, n);
-		matches = g_slist_reverse (matches);
+		// matches is currently in reverse order
 		for (l = matches; l; l = l->next)
-			res->v_array.vals[0][i++] = value_new_string_nocopy (l->data);
+			res->v_array.vals[0][--i] = value_new_string_nocopy (l->data);
 		g_slist_free (matches);
 	}
 	return res;
@@ -1728,6 +1728,7 @@ find_delimiter_matches (GnmEvalPos const *pos, char const *text,
 			char const *search_haystack = folded_text ? folded_text : text;
 			int d_len_bytes = strlen (d);
 			char const *p = search_haystack;
+			size_t search_needle_bytes = strlen (search_needle);
 
 			while ((p = strstr (p, search_needle))) {
 				Match m;
@@ -1735,8 +1736,8 @@ find_delimiter_matches (GnmEvalPos const *pos, char const *text,
 				m.byte_len = d_len_bytes;
 				m.is_row_delim = (k == 1);
 				g_array_append_val (matches, m);
-				p += strlen (search_needle);
-				if (strlen (search_needle) == 0) break;
+				p += search_needle_bytes;
+				if (search_needle_bytes == 0) break;
 			}
 			g_free (folded_d);
 		}

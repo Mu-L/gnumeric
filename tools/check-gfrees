@@ -25,6 +25,7 @@ my $exitcode = 0;
 
 my @free_funcs = qw(g_free
 		    g_list_free g_slist_free
+		    g_match_info_free
 		    gnm_expr_list_free gnm_expr_list_unref
 		    go_format_unref value_release
 		    gnm_action_unref gnm_criteria_unref gnm_expr_sharer_unref

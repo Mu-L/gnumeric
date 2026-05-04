@@ -1022,6 +1022,81 @@ static GnmFuncHelp const help_regexextract[] = {
 };
 
 static GnmValue *
+gnumeric_regexextract_mode_1 (GRegex *regex, char const *text)
+{
+	GSList *matches = NULL;
+	int pos = 0;
+	int text_len = strlen (text);
+	GnmValue *res = NULL;
+
+	while (pos <= text_len) {
+		GMatchInfo *match_info = NULL;
+		if (g_regex_match_full (regex, text, text_len, pos, 0, &match_info, NULL)) {
+			char *m = g_match_info_fetch (match_info, 0);
+			int start, end;
+			g_match_info_fetch_pos (match_info, 0, &start, &end);
+
+			if (start == end) {
+				/* Empty match. Append it, then try for a non-empty match at same position. */
+				matches = g_slist_prepend (matches, m);
+				g_match_info_free (match_info);
+				match_info = NULL;
+				if (g_regex_match_full (regex, text, text_len, pos, G_REGEX_MATCH_NOTEMPTY, &match_info, NULL)) {
+					m = g_match_info_fetch (match_info, 0);
+					g_match_info_fetch_pos (match_info, 0, &start, &end);
+					matches = g_slist_prepend (matches, m);
+					pos = end;
+				} else {
+					pos++;
+				}
+			} else {
+				matches = g_slist_prepend (matches, m);
+				pos = end;
+			}
+			g_match_info_free (match_info);
+		} else {
+			g_match_info_free (match_info);
+			break;
+		}
+	}
+
+	if (matches) {
+		int n = g_slist_length (matches);
+		int i = 0;
+		GSList *l;
+		res = value_new_array_non_init (1, n);
+		matches = g_slist_reverse (matches);
+		for (l = matches; l; l = l->next)
+			res->v_array.vals[0][i++] = value_new_string_nocopy (l->data);
+		g_slist_free (matches);
+	}
+	return res;
+}
+
+static GnmValue *
+gnumeric_regexextract_mode_2 (GRegex *regex, char const *text)
+{
+	GMatchInfo *match_info = NULL;
+	GnmValue *res = NULL;
+
+	if (g_regex_match (regex, text, 0, &match_info)) {
+		int n_groups = g_regex_get_capture_count (regex);
+		if (n_groups > 0) {
+			int i;
+			res = value_new_array_non_init (n_groups, 1);
+			for (i = 1; i <= n_groups; i++) {
+				char *group = g_match_info_fetch (match_info, i);
+				res->v_array.vals[i - 1][0] = group
+					? value_new_string_nocopy (group)
+					: value_new_empty ();
+			}
+		}
+	}
+	g_match_info_free (match_info);
+	return res;
+}
+
+static GnmValue *
 gnumeric_regexextract (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 {
 	char const *text = value_peek_string (argv[0]);
@@ -1029,7 +1104,6 @@ gnumeric_regexextract (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 	int return_mode = argv[2] ? value_get_as_int (argv[2]) : 0;
 	gboolean case_insensitive = argv[3] ? value_get_as_checked_bool (argv[3]) : FALSE;
 	GRegex *regex;
-	GMatchInfo *match_info;
 	GError *err = NULL;
 	GnmValue *res = NULL;
 	GRegexCompileFlags cflags = G_REGEX_OPTIMIZE;
@@ -1044,76 +1118,15 @@ gnumeric_regexextract (GnmFuncEvalInfo *ei, GnmValue const * const *argv)
 	}
 
 	if (return_mode == 0) {
+		GMatchInfo *match_info;
 		if (g_regex_match (regex, text, 0, &match_info)) {
 			res = value_new_string_nocopy (g_match_info_fetch (match_info, 0));
 		}
 		g_match_info_free (match_info);
 	} else if (return_mode == 1) {
-		GSList *matches = NULL;
-		int pos = 0;
-		int text_len = strlen (text);
-
-		while (pos <= text_len) {
-			if (g_regex_match_full (regex, text, text_len, pos, 0, &match_info, NULL)) {
-				char *m = g_match_info_fetch (match_info, 0);
-				int start, end;
-				g_match_info_fetch_pos (match_info, 0, &start, &end);
-
-				if (start == end) {
-					/* Empty match. Append it, then try for a non-empty match at same position. */
-					matches = g_slist_prepend (matches, m);
-					g_match_info_free (match_info);
-					if (g_regex_match_full (regex, text, text_len, pos, G_REGEX_MATCH_NOTEMPTY, &match_info, NULL)) {
-						m = g_match_info_fetch (match_info, 0);
-						g_match_info_fetch_pos (match_info, 0, &start, &end);
-						matches = g_slist_prepend (matches, m);
-						pos = end;
-					} else {
-						pos++;
-					}
-				} else {
-					matches = g_slist_prepend (matches, m);
-					pos = end;
-				}
-				g_match_info_free (match_info);
-			} else {
-				break;
-			}
-		}
-
-		if (matches) {
-			int n = g_slist_length (matches);
-			int i = 0;
-			GSList *l;
-			res = value_new_array_non_init (1, n);
-			matches = g_slist_reverse (matches);
-			for (l = matches; l; l = l->next)
-				res->v_array.vals[0][i++] = value_new_string_nocopy (l->data);
-			g_slist_free (matches);
-		}
+		res = gnumeric_regexextract_mode_1 (regex, text);
 	} else if (return_mode == 2) {
-		if (g_regex_match (regex, text, 0, &match_info)) {
-			int n_groups = g_regex_get_capture_count (regex);
-			int i, count = 0;
-			for (i = 1; i <= n_groups; i++) {
-				char *group = g_match_info_fetch (match_info, i);
-				if (group) {
-					count++;
-					g_free (group);
-				}
-			}
-			if (count > 0) {
-				res = value_new_array_non_init (count, 1);
-				int j = 0;
-				for (i = 1; i <= n_groups; i++) {
-					char *group = g_match_info_fetch (match_info, i);
-					if (group) {
-						res->v_array.vals[j++][0] = value_new_string_nocopy (group);
-					}
-				}
-			}
-		}
-		g_match_info_free (match_info);
+		res = gnumeric_regexextract_mode_2 (regex, text);
 	}
 
 	g_regex_unref (regex);
